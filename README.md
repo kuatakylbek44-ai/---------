@@ -27,11 +27,15 @@ npm run dev
 
 ## 3D сахна
 
-Қазіргі нұсқа сыртқы модельсіз жұмыс істейді: `src/components/Character.tsx` және `src/components/HeroScene.tsx` процедуралық геометрия қолданады. GLB/GLTF модельді ауыстыру жөніндегі нұсқау және қазіргі активтердің тізімі `SCENE_ASSETS.md` ішінде. Модельді `public/models/` ішіне қосып, `useGLTF` арқылы нақты файлды көрсетіңіз. Жоқ файлға немесе ойдан шығарылған URL-ге сілтеме жасамаңыз.
+Қазіргі нұсқа сыртқы модельсіз жұмыс істейді: `src/components/Character.tsx` және `src/components/HeroScene.tsx` процедуралық геометрия қолданады. Сахнада отырған аватар, сұр кресло, үстел, көк MacBook, SOTSU мониторы және Lenovo LOQ бар. Экран текстуралары жергілікті Canvas арқылы жасалады; 3D үшін сыртқы HDR, қаріп немесе GLB жүктелмейді. Активтердің тізімі `SCENE_ASSETS.md` ішінде.
+
+Canvas ішінде солға/оңға drag немесе touch арқылы толық 360° айналдыруға болады. Пернетақтада көрініске Tab арқылы өтіп, ← / → қолданыңыз. Тек Y осі бұрылады: вертикаль бұрылу, pan және zoom жоқ. Touch кезінде тік сырғыту бетті айналдырады. Сахна lazy жүктеледі және `frameloop="demand"` арқылы тек өзгеріс кезінде рендерленеді; mobile DPR 1, shadow map 512. `prefers-reduced-motion` қосылғанда damping өшеді. WebGL болмағанда, контекст жоғалғанда немесе 3D жүктеу қатесінде SVG workspace көрсетіледі.
 
 ## Тексеру
 
-Тіл localStorage-та сақталады, `html lang` өзгереді, мобильді мәзір клавиатурамен ашылады, email көшіру нәтижесін көрсетеді. 3D сыртқы модельге тәуелсіз, сондықтан модель жоқ кезде бос canvas мәселесі болмайды. `prefers-reduced-motion` режимінде pointer анимациясы тоқтайды.
+Тіл localStorage-та сақталады, `html lang` өзгереді; жарамсыз сақталған тіл қазақшаға ауысады. Мобильді мәзір клавиатурамен ашылады, Escape және сырттан басу арқылы жабылады. Email көшіру нәтижесін көрсетеді. Әлеуметтік желі логотиптері `src/components/SocialIcon.tsx` ішінде сыртқы кітапханасыз inline SVG арқылы берілген.
+
+Responsive тексеру өлшемдері: 360, 390, 414, 768, 1024 және 1440px. Үш тілдің әрқайсысында overflow тексерілді. Одан бөлек Canvas, мәзір, touch/drag, reduced-motion және WebGL fallback тексерілді. Скриншоттар мен браузер есептері: `artifacts/upgrade/`.
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.

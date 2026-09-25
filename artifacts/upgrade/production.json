@@ -1,0 +1,71 @@
+[
+  {
+    "width": 390,
+    "errors": [],
+    "failed": [],
+    "requests": [
+      "http://127.0.0.1:4173/",
+      "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=u3A7Gdt0OVxKpKgHW9nRDTqhe3AaSg7c8iB01YYdfUthOgW7Xu66n_GC--r8pg7K",
+      "http://127.0.0.1:4173/assets/index-MpZUUrOj.js",
+      "http://127.0.0.1:4173/assets/index-DzljwiwE.css",
+      "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap",
+      "http://127.0.0.1:4173/assets/HeroScene-XVyNvnKk.js",
+      "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4Cw.woff2",
+      "https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggqxSuXd.woff2",
+      "https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggOxSuXd.woff2",
+      "https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggexSg.woff2",
+      "http://127.0.0.1:4173/favicon.svg"
+    ],
+    "dragChangesRenderedImage": true,
+    "canvas": {
+      "width": 352,
+      "height": 388
+    }
+  },
+  {
+    "width": 1440,
+    "errors": [],
+    "failed": [],
+    "requests": [
+      "http://127.0.0.1:4173/",
+      "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=j5dkcNepx2jhHvAvpJ0E_FMJIm_sTy8P46_ZqG5Lu9c81OziEF9VK22vpyggCxUe",
+      "http://127.0.0.1:4173/assets/index-MpZUUrOj.js",
+      "http://127.0.0.1:4173/assets/index-DzljwiwE.css",
+      "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap",
+      "http://127.0.0.1:4173/assets/HeroScene-XVyNvnKk.js",
+      "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4Cw.woff2",
+      "https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggOxSuXd.woff2",
+      "https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggexSg.woff2",
+      "https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggqxSuXd.woff2",
+      "http://127.0.0.1:4173/favicon.svg"
+    ],
+    "dragChangesRenderedImage": true,
+    "canvas": {
+      "width": 602,
+      "height": 546
+    }
+  },
+  {
+    "name": "slow lazy loading SVG and stable layout",
+    "loadingBox": {
+      "x": 18,
+      "y": 585.921875,
+      "width": 354,
+      "height": 390
+    },
+    "loadedBox": {
+      "x": 18,
+      "y": 585.921875,
+      "width": 354,
+      "height": 390
+    }
+  },
+  {
+    "name": "failed lazy chunk shows illustration",
+    "pass": true
+  },
+  {
+    "name": "invalid saved language recovers to Kazakh",
+    "pass": true
+  }
+]

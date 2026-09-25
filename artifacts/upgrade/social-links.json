@@ -1,0 +1,186 @@
+{
+  "url": "http://127.0.0.1:5174/",
+  "checkedAt": "2026-09-25T15:40:57.849Z",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "links": [
+    {
+      "label": "Instagram",
+      "expectedHref": "https://www.instagram.com/ayazbala__/",
+      "actualHref": "https://www.instagram.com/ayazbala__/",
+      "hrefMatches": true,
+      "visible": true,
+      "svgVisible": true,
+      "accessibleName": "Instagram",
+      "target": "_blank",
+      "popup": {
+        "opened": true,
+        "url": "https://www.instagram.com/ayazbala__/",
+        "title": "Akylbek | UGC Creator (@ayazbala__) • Фото и видео в Instagram",
+        "documentResponses": [
+          {
+            "url": "https://www.instagram.com/ayazbala__/",
+            "status": 200
+          }
+        ],
+        "navigationFailures": [],
+        "loadError": null,
+        "navigationStatus": 200,
+        "bodyExcerpt": "Войти\nЗарегистрироваться\nayazbala__\n4 015 подписчиков\n433 подписок\nAkylbek | UGC Creator\nUGC Creator | IT & Tech\n📩 Collabs: ayazbala.collabs@gmail.com\n🎥 UGC • Reels • Product Content\n💻 Tech • Gadgets • Setup... \nещё\nUGC 🎥\nWORK 💼\nRESULTS 📊\nTECH 🧑🏻‍💻\nABOUT 👤\n🤍\nFamily\nЕщё публикации от ayazbala__\nMeta\nИнформация\nБлог\nВакансии\nПомощь\nAPI\nКонфиденциальность\nУсловия\nМеста\nПопулярное\nInstagram Lite\nMeta AI\nMuse\nThreads\nЗагрузка контактов и лица, не являющиеся пользователями\nMeta Verified\nРусский\nAfrikaans\nالعربية\nČeština\nDansk\nDeutsch\nΕλληνικά\nEnglish\nEnglish (UK)\nEspañol (España)\nEspañol\n"
+      }
+    },
+    {
+      "label": "TikTok",
+      "expectedHref": "https://www.tiktok.com/@ayazbala_",
+      "actualHref": "https://www.tiktok.com/@ayazbala_",
+      "hrefMatches": true,
+      "visible": true,
+      "svgVisible": true,
+      "accessibleName": "TikTok",
+      "target": "_blank",
+      "popup": {
+        "opened": true,
+        "url": "https://www.tiktok.com/@ayazbala_",
+        "title": "TikTok - Make Your Day",
+        "documentResponses": [
+          {
+            "url": "https://www.tiktok.com/@ayazbala_",
+            "status": 200
+          }
+        ],
+        "navigationFailures": [],
+        "loadError": null,
+        "navigationStatus": 200,
+        "bodyExcerpt": "ayazbala_\nayazbala_\n80\nПодписки\n2689\nПодписчики\n169.5K\nЛайки\n@toqta ❤️\nВойти",
+        "settledCheck": {
+          "waitLimitMs": 15000,
+          "settled": true,
+          "url": "https://www.tiktok.com/@ayazbala_",
+          "title": "TikTok - Make Your Day",
+          "bodyExcerpt": "ayazbala_\nayazbala_\n80\nПодписки\n2689\nПодписчики\n169.5K\nЛайки\n@toqta ❤️\nВойти"
+        },
+        "profileVerified": true,
+        "initialBodyExcerpt": "Please wait..."
+      }
+    },
+    {
+      "label": "WhatsApp",
+      "expectedHref": "https://wa.me/77716169527",
+      "actualHref": "https://wa.me/77716169527",
+      "hrefMatches": true,
+      "visible": true,
+      "svgVisible": true,
+      "accessibleName": "WhatsApp",
+      "target": "_blank",
+      "popup": {
+        "opened": true,
+        "url": "https://api.whatsapp.com/send/?phone=77716169527&text&type=phone_number&app_absent=0",
+        "title": "Переслать по WhatsApp",
+        "documentResponses": [
+          {
+            "url": "https://wa.me/77716169527",
+            "status": 302
+          },
+          {
+            "url": "https://api.whatsapp.com/send/?phone=77716169527&text&type=phone_number&app_absent=0",
+            "status": 200
+          }
+        ],
+        "navigationFailures": [],
+        "loadError": null,
+        "navigationStatus": 200,
+        "bodyExcerpt": "Функции\nКонфиденциальность\nБлог\nПриложения\nСправочный центр\nДля компаний\nВойти\nСкачать\n\nЧат в WhatsApp с +7 771 616 9527\n\nОткрыть приложение\nПродолжить в WhatsApp Web\nУ вас нет приложения?\nСкачайте его сейчас\nСкачать\nНаша работа\nФункции\nБлог\nБезопасность\nДля компаний\nНаша компания\nО нас\nВакансии\nБренд-центр\nКонфиденциальность\nИспользование WhatsApp\nМобильное устройство\nКомпьютер\nПланшет\nWhatsApp Web\nНужна помощь?\nСвязаться с нами\nСправочный центр\nПриложения\nИнформация о безопасности\n\n2026 © WhatsApp LLC\n\nУсловия и Политика конфиденциальности\nКарта сайта\nрусский"
+      }
+    },
+    {
+      "label": "Telegram",
+      "expectedHref": "https://t.me/ayazba1a",
+      "actualHref": "https://t.me/ayazba1a",
+      "hrefMatches": true,
+      "visible": true,
+      "svgVisible": true,
+      "accessibleName": "Telegram",
+      "target": "_blank",
+      "popup": {
+        "opened": true,
+        "url": "https://t.me/ayazba1a",
+        "title": "Telegram: Contact @ayazba1a",
+        "documentResponses": [
+          {
+            "url": "https://t.me/ayazba1a",
+            "status": 200
+          }
+        ],
+        "navigationFailures": [],
+        "loadError": null,
+        "navigationStatus": 200,
+        "bodyExcerpt": "DOWNLOAD\nAkylbek\n@ayazba1a\nSEND MESSAGE"
+      }
+    },
+    {
+      "label": "GitHub",
+      "expectedHref": "https://github.com/kuatakylbek44-ai",
+      "actualHref": "https://github.com/kuatakylbek44-ai",
+      "hrefMatches": true,
+      "visible": true,
+      "svgVisible": true,
+      "accessibleName": "GitHub",
+      "target": "_blank",
+      "popup": {
+        "opened": true,
+        "url": "https://github.com/kuatakylbek44-ai",
+        "title": "kuatakylbek44-ai · GitHub",
+        "documentResponses": [
+          {
+            "url": "https://github.com/kuatakylbek44-ai",
+            "status": 200
+          }
+        ],
+        "navigationFailures": [],
+        "loadError": null,
+        "navigationStatus": 200,
+        "bodyExcerpt": "Skip to content\nNavigation Menu\nPlatform\nSolutions\nResources\nOpen Source\nEnterprise\nPricing\nSearch\n/\nSign in\nSign up\n\tkuatakylbek44-ai\nFollow\nOverview\nRepositories\n1\nProjects\nPackages\nStars\n\tkuatakylbek44-ai\t\nFollow\nkuatakylbek44-ai\nFollow\n 0 followers · 2 following\nBlock or report user\nPopular repositories\nLoading\n---------\nPublic\n\n TypeScript\n\nFooter\n© 2026 GitHub, Inc.\nFooter navigation\nTerms\nPrivacy\nSecurity\nStatus\nCommunity\nDocs\nContact\nManage cookies\nDo not share my personal information"
+      }
+    }
+  ],
+  "email": {
+    "actualHref": "mailto:ayazbala.collabs@gmail.com",
+    "expectedHref": "mailto:ayazbala.collabs@gmail.com",
+    "launched": false
+  },
+  "phone": {
+    "actualHref": "tel:+77716169527",
+    "expectedHref": "tel:+77716169527",
+    "launched": false
+  },
+  "localPageErrors": [],
+  "footerLinks": [
+    {
+      "label": "Instagram",
+      "href": "https://www.instagram.com/ayazbala__/",
+      "hasSvg": true
+    },
+    {
+      "label": "TikTok",
+      "href": "https://www.tiktok.com/@ayazbala_",
+      "hasSvg": true
+    },
+    {
+      "label": "WhatsApp",
+      "href": "https://wa.me/77716169527",
+      "hasSvg": true
+    },
+    {
+      "label": "Telegram",
+      "href": "https://t.me/ayazba1a",
+      "hasSvg": true
+    },
+    {
+      "label": "GitHub",
+      "href": "https://github.com/kuatakylbek44-ai",
+      "hasSvg": true
+    }
+  ]
+}

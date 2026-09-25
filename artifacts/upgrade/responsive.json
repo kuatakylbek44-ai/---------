@@ -1,0 +1,320 @@
+[
+  {
+    "width": 360,
+    "errors": [],
+    "failed": [],
+    "layouts": [
+      {
+        "language": "kk",
+        "lang": "kk",
+        "scrollWidth": 360,
+        "viewport": 360,
+        "overflow": []
+      },
+      {
+        "language": "ru",
+        "lang": "ru",
+        "scrollWidth": 360,
+        "viewport": 360,
+        "overflow": []
+      },
+      {
+        "language": "en",
+        "lang": "en",
+        "scrollWidth": 360,
+        "viewport": 360,
+        "overflow": []
+      }
+    ],
+    "scene": {
+      "frame": 1,
+      "calls": 144,
+      "triangles": 46594,
+      "frameloop": "demand",
+      "dpr": 1,
+      "camera": [
+        6.6,
+        5.1,
+        9.6
+      ],
+      "rig": [
+        0,
+        0,
+        0,
+        "XYZ"
+      ],
+      "canvas": [
+        330,
+        358
+      ],
+      "meshes": 7,
+      "touchAction": "pan-y",
+      "parentTouchAction": "pan-y"
+    }
+  },
+  {
+    "width": 390,
+    "errors": [],
+    "failed": [],
+    "layouts": [
+      {
+        "language": "kk",
+        "lang": "kk",
+        "scrollWidth": 390,
+        "viewport": 390,
+        "overflow": []
+      },
+      {
+        "language": "ru",
+        "lang": "ru",
+        "scrollWidth": 390,
+        "viewport": 390,
+        "overflow": []
+      },
+      {
+        "language": "en",
+        "lang": "en",
+        "scrollWidth": 390,
+        "viewport": 390,
+        "overflow": []
+      }
+    ],
+    "scene": {
+      "frame": 1,
+      "calls": 144,
+      "triangles": 46594,
+      "frameloop": "demand",
+      "dpr": 1,
+      "camera": [
+        6.6,
+        5.1,
+        9.6
+      ],
+      "rig": [
+        0,
+        0,
+        0,
+        "XYZ"
+      ],
+      "canvas": [
+        352,
+        388
+      ],
+      "meshes": 7,
+      "touchAction": "pan-y",
+      "parentTouchAction": "pan-y"
+    }
+  },
+  {
+    "width": 414,
+    "errors": [],
+    "failed": [],
+    "layouts": [
+      {
+        "language": "kk",
+        "lang": "kk",
+        "scrollWidth": 414,
+        "viewport": 414,
+        "overflow": []
+      },
+      {
+        "language": "ru",
+        "lang": "ru",
+        "scrollWidth": 414,
+        "viewport": 414,
+        "overflow": []
+      },
+      {
+        "language": "en",
+        "lang": "en",
+        "scrollWidth": 414,
+        "viewport": 414,
+        "overflow": []
+      }
+    ],
+    "scene": {
+      "frame": 1,
+      "calls": 144,
+      "triangles": 46594,
+      "frameloop": "demand",
+      "dpr": 1,
+      "camera": [
+        6.6,
+        5.1,
+        9.6
+      ],
+      "rig": [
+        0,
+        0,
+        0,
+        "XYZ"
+      ],
+      "canvas": [
+        376,
+        388
+      ],
+      "meshes": 7,
+      "touchAction": "pan-y",
+      "parentTouchAction": "pan-y"
+    }
+  },
+  {
+    "width": 768,
+    "errors": [],
+    "failed": [],
+    "layouts": [
+      {
+        "language": "kk",
+        "lang": "kk",
+        "scrollWidth": 768,
+        "viewport": 768,
+        "overflow": []
+      },
+      {
+        "language": "ru",
+        "lang": "ru",
+        "scrollWidth": 768,
+        "viewport": 768,
+        "overflow": []
+      },
+      {
+        "language": "en",
+        "lang": "en",
+        "scrollWidth": 768,
+        "viewport": 768,
+        "overflow": []
+      }
+    ],
+    "scene": {
+      "frame": 1,
+      "calls": 144,
+      "triangles": 46594,
+      "frameloop": "demand",
+      "dpr": 1,
+      "camera": [
+        6.6,
+        5.1,
+        9.6
+      ],
+      "rig": [
+        0,
+        0,
+        0,
+        "XYZ"
+      ],
+      "canvas": [
+        678,
+        438
+      ],
+      "meshes": 7,
+      "touchAction": "pan-y",
+      "parentTouchAction": "pan-y"
+    }
+  },
+  {
+    "width": 1024,
+    "errors": [],
+    "failed": [],
+    "layouts": [
+      {
+        "language": "kk",
+        "lang": "kk",
+        "scrollWidth": 1024,
+        "viewport": 1024,
+        "overflow": []
+      },
+      {
+        "language": "ru",
+        "lang": "ru",
+        "scrollWidth": 1024,
+        "viewport": 1024,
+        "overflow": []
+      },
+      {
+        "language": "en",
+        "lang": "en",
+        "scrollWidth": 1024,
+        "viewport": 1024,
+        "overflow": []
+      }
+    ],
+    "scene": {
+      "frame": 1,
+      "calls": 144,
+      "triangles": 46594,
+      "frameloop": "demand",
+      "dpr": 1,
+      "camera": [
+        6.6,
+        5.1,
+        9.6
+      ],
+      "rig": [
+        0,
+        0,
+        0,
+        "XYZ"
+      ],
+      "canvas": [
+        491.953125,
+        488
+      ],
+      "meshes": 7,
+      "touchAction": "pan-y",
+      "parentTouchAction": "pan-y"
+    }
+  },
+  {
+    "width": 1440,
+    "errors": [],
+    "failed": [],
+    "layouts": [
+      {
+        "language": "kk",
+        "lang": "kk",
+        "scrollWidth": 1440,
+        "viewport": 1440,
+        "overflow": []
+      },
+      {
+        "language": "ru",
+        "lang": "ru",
+        "scrollWidth": 1440,
+        "viewport": 1440,
+        "overflow": []
+      },
+      {
+        "language": "en",
+        "lang": "en",
+        "scrollWidth": 1440,
+        "viewport": 1440,
+        "overflow": []
+      }
+    ],
+    "scene": {
+      "frame": 1,
+      "calls": 144,
+      "triangles": 46594,
+      "frameloop": "demand",
+      "dpr": 1,
+      "camera": [
+        6.6,
+        5.1,
+        9.6
+      ],
+      "rig": [
+        0,
+        0,
+        0,
+        "XYZ"
+      ],
+      "canvas": [
+        602.1875,
+        546
+      ],
+      "meshes": 7,
+      "touchAction": "pan-y",
+      "parentTouchAction": "pan-y"
+    }
+  }
+]
