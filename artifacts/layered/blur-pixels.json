@@ -1,0 +1,11 @@
+{
+  "source": "production preview",
+  "overlapMeanRGBDifference": 2.272353174603175,
+  "clearWorkspaceMeanRGBDifference": 0.0,
+  "changedBounds": [
+    0,
+    89,
+    690,
+    486
+  ]
+}

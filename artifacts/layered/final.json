@@ -1,0 +1,401 @@
+[
+  {
+    "width": 390,
+    "errors": [],
+    "failed": [],
+    "layouts": [
+      {
+        "lang": "kk",
+        "headBounds": {
+          "left": 103.67793653187648,
+          "right": 157.11172992883843,
+          "top": 355.1497270377615,
+          "bottom": 409.34714286664814
+        },
+        "scrollWidth": 390,
+        "viewport": 390,
+        "hero": {
+          "x": 18,
+          "y": 74,
+          "width": 354,
+          "height": 877.921875
+        },
+        "text": {
+          "x": 18,
+          "y": 108,
+          "width": 354,
+          "height": 260.734375
+        },
+        "scene": {
+          "x": 0,
+          "y": 263.734375,
+          "width": 390,
+          "height": 445
+        },
+        "canvas": {
+          "x": 0,
+          "y": 263.734375,
+          "width": 390,
+          "height": 445
+        },
+        "filter": "none",
+        "blur": "blur(2.5px)",
+        "mask": "linear-gradient(rgb(0, 0, 0) 58%, rgba(0, 0, 0, 0.8) 82%, rgba(0, 0, 0, 0))",
+        "clearAlpha": 0,
+        "frames": 1,
+        "loop": "demand",
+        "overflow": []
+      },
+      {
+        "lang": "ru",
+        "headBounds": {
+          "left": 103.67793653187648,
+          "right": 157.11172992883843,
+          "top": 355.1497270377615,
+          "bottom": 409.34714286664814
+        },
+        "scrollWidth": 390,
+        "viewport": 390,
+        "hero": {
+          "x": 18,
+          "y": 74,
+          "width": 354,
+          "height": 875.921875
+        },
+        "text": {
+          "x": 18,
+          "y": 108,
+          "width": 354,
+          "height": 260.734375
+        },
+        "scene": {
+          "x": 0,
+          "y": 263.734375,
+          "width": 390,
+          "height": 445
+        },
+        "canvas": {
+          "x": 0,
+          "y": 263.734375,
+          "width": 390,
+          "height": 445
+        },
+        "filter": "none",
+        "blur": "blur(2.5px)",
+        "mask": "linear-gradient(rgb(0, 0, 0) 58%, rgba(0, 0, 0, 0.8) 82%, rgba(0, 0, 0, 0))",
+        "clearAlpha": 0,
+        "frames": 2,
+        "loop": "demand",
+        "overflow": []
+      },
+      {
+        "lang": "en",
+        "headBounds": {
+          "left": 103.67793653187648,
+          "right": 157.11172992883843,
+          "top": 305.6184770377615,
+          "bottom": 359.81589286664814
+        },
+        "scrollWidth": 390,
+        "viewport": 390,
+        "hero": {
+          "x": 18,
+          "y": 74,
+          "width": 354,
+          "height": 796.796875
+        },
+        "text": {
+          "x": 18,
+          "y": 108,
+          "width": 354,
+          "height": 211.203125
+        },
+        "scene": {
+          "x": 0,
+          "y": 214.203125,
+          "width": 390,
+          "height": 445
+        },
+        "canvas": {
+          "x": 0,
+          "y": 214.203125,
+          "width": 390,
+          "height": 445
+        },
+        "filter": "none",
+        "blur": "blur(2.5px)",
+        "mask": "linear-gradient(rgb(0, 0, 0) 58%, rgba(0, 0, 0, 0.8) 82%, rgba(0, 0, 0, 0))",
+        "clearAlpha": 0,
+        "frames": 3,
+        "loop": "demand",
+        "overflow": []
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "errors": [],
+    "failed": [],
+    "layouts": [
+      {
+        "lang": "kk",
+        "headBounds": {
+          "left": 246.99835678467636,
+          "right": 327.639048239028,
+          "top": 427.02734460299956,
+          "bottom": 506.44975983970136
+        },
+        "scrollWidth": 768,
+        "viewport": 768,
+        "hero": {
+          "x": 44,
+          "y": 76,
+          "width": 680,
+          "height": 1019.90625
+        },
+        "text": {
+          "x": 44,
+          "y": 116,
+          "width": 557.59375,
+          "height": 320.90625
+        },
+        "scene": {
+          "x": 23.609375,
+          "y": 341.90625,
+          "width": 720.796875,
+          "height": 560
+        },
+        "canvas": {
+          "x": 23.609375,
+          "y": 341.90625,
+          "width": 720.796875,
+          "height": 560
+        },
+        "filter": "none",
+        "blur": "blur(3px)",
+        "mask": "linear-gradient(90deg, rgb(0, 0, 0) 45%, rgba(0, 0, 0, 0) 100%), linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0) 12%, rgb(0, 0, 0) 88%, rgba(0, 0, 0, 0))",
+        "clearAlpha": 0,
+        "frames": 1,
+        "loop": "demand",
+        "overflow": []
+      },
+      {
+        "lang": "ru",
+        "headBounds": {
+          "left": 246.99835678467636,
+          "right": 327.639048239028,
+          "top": 427.02734460299956,
+          "bottom": 506.44975983970136
+        },
+        "scrollWidth": 768,
+        "viewport": 768,
+        "hero": {
+          "x": 44,
+          "y": 76,
+          "width": 680,
+          "height": 1019.90625
+        },
+        "text": {
+          "x": 44,
+          "y": 116,
+          "width": 557.59375,
+          "height": 320.90625
+        },
+        "scene": {
+          "x": 23.609375,
+          "y": 341.90625,
+          "width": 720.796875,
+          "height": 560
+        },
+        "canvas": {
+          "x": 23.609375,
+          "y": 341.90625,
+          "width": 720.796875,
+          "height": 560
+        },
+        "filter": "none",
+        "blur": "blur(3px)",
+        "mask": "linear-gradient(90deg, rgb(0, 0, 0) 45%, rgba(0, 0, 0, 0) 100%), linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0) 12%, rgb(0, 0, 0) 88%, rgba(0, 0, 0, 0))",
+        "clearAlpha": 0,
+        "frames": 2,
+        "loop": "demand",
+        "overflow": []
+      },
+      {
+        "lang": "en",
+        "headBounds": {
+          "left": 246.99835678467636,
+          "right": 327.639048239028,
+          "top": 327.07421960299956,
+          "bottom": 406.49663483970136
+        },
+        "scrollWidth": 768,
+        "viewport": 768,
+        "hero": {
+          "x": 44,
+          "y": 76,
+          "width": 680,
+          "height": 919.953125
+        },
+        "text": {
+          "x": 44,
+          "y": 116,
+          "width": 557.59375,
+          "height": 220.953125
+        },
+        "scene": {
+          "x": 23.609375,
+          "y": 241.953125,
+          "width": 720.796875,
+          "height": 560
+        },
+        "canvas": {
+          "x": 23.609375,
+          "y": 241.953125,
+          "width": 720.796875,
+          "height": 560
+        },
+        "filter": "none",
+        "blur": "blur(3px)",
+        "mask": "linear-gradient(90deg, rgb(0, 0, 0) 45%, rgba(0, 0, 0, 0) 100%), linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0) 12%, rgb(0, 0, 0) 88%, rgba(0, 0, 0, 0))",
+        "clearAlpha": 0,
+        "frames": 3,
+        "loop": "demand",
+        "overflow": []
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "errors": [],
+    "failed": [],
+    "layouts": [
+      {
+        "lang": "kk",
+        "headBounds": {
+          "left": 550.7564781618937,
+          "right": 657.3173918694299,
+          "top": 194.48144643967797,
+          "bottom": 299.43249514531965
+        },
+        "scrollWidth": 1440,
+        "viewport": 1440,
+        "hero": {
+          "x": 130,
+          "y": 82,
+          "width": 1180,
+          "height": 740
+        },
+        "text": {
+          "x": 130,
+          "y": 198.203125,
+          "width": 649,
+          "height": 345.59375
+        },
+        "scene": {
+          "x": 212.609375,
+          "y": 82,
+          "width": 1038.390625,
+          "height": 740
+        },
+        "canvas": {
+          "x": 212.609375,
+          "y": 82,
+          "width": 1038.390625,
+          "height": 740
+        },
+        "filter": "none",
+        "blur": "blur(3.5px)",
+        "mask": "linear-gradient(90deg, rgb(0, 0, 0) 45%, rgba(0, 0, 0, 0) 100%), linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0) 12%, rgb(0, 0, 0) 88%, rgba(0, 0, 0, 0))",
+        "clearAlpha": 0,
+        "frames": 1,
+        "loop": "demand",
+        "overflow": []
+      },
+      {
+        "lang": "ru",
+        "headBounds": {
+          "left": 550.7564781618937,
+          "right": 657.3173918694299,
+          "top": 194.48144643967797,
+          "bottom": 299.43249514531965
+        },
+        "scrollWidth": 1440,
+        "viewport": 1440,
+        "hero": {
+          "x": 130,
+          "y": 82,
+          "width": 1180,
+          "height": 740
+        },
+        "text": {
+          "x": 130,
+          "y": 198.203125,
+          "width": 649,
+          "height": 345.59375
+        },
+        "scene": {
+          "x": 212.609375,
+          "y": 82,
+          "width": 1038.390625,
+          "height": 740
+        },
+        "canvas": {
+          "x": 212.609375,
+          "y": 82,
+          "width": 1038.390625,
+          "height": 740
+        },
+        "filter": "none",
+        "blur": "blur(3.5px)",
+        "mask": "linear-gradient(90deg, rgb(0, 0, 0) 45%, rgba(0, 0, 0, 0) 100%), linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0) 12%, rgb(0, 0, 0) 88%, rgba(0, 0, 0, 0))",
+        "clearAlpha": 0,
+        "frames": 2,
+        "loop": "demand",
+        "overflow": []
+      },
+      {
+        "lang": "en",
+        "headBounds": {
+          "left": 550.7564781618937,
+          "right": 657.3173918694299,
+          "top": 194.48144643967797,
+          "bottom": 299.43249514531965
+        },
+        "scrollWidth": 1440,
+        "viewport": 1440,
+        "hero": {
+          "x": 130,
+          "y": 82,
+          "width": 1180,
+          "height": 740
+        },
+        "text": {
+          "x": 130,
+          "y": 256.703125,
+          "width": 649,
+          "height": 228.59375
+        },
+        "scene": {
+          "x": 212.609375,
+          "y": 82,
+          "width": 1038.390625,
+          "height": 740
+        },
+        "canvas": {
+          "x": 212.609375,
+          "y": 82,
+          "width": 1038.390625,
+          "height": 740
+        },
+        "filter": "none",
+        "blur": "blur(3.5px)",
+        "mask": "linear-gradient(90deg, rgb(0, 0, 0) 45%, rgba(0, 0, 0, 0) 100%), linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0) 12%, rgb(0, 0, 0) 88%, rgba(0, 0, 0, 0))",
+        "clearAlpha": 0,
+        "frames": 3,
+        "loop": "demand",
+        "overflow": []
+      }
+    ]
+  }
+]

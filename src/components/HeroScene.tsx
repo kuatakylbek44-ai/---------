@@ -1,8 +1,8 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { RoundedBox } from '@react-three/drei'
-import { Component, useEffect, useMemo, useRef, useState } from 'react'
+import { Component, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
-import { CanvasTexture, Group, PCFShadowMap, SRGBColorSpace } from 'three'
+import { CanvasTexture, Group, PCFShadowMap, PerspectiveCamera, SRGBColorSpace } from 'three'
 import { Character } from './Character'
 
 type Props = { reducedMotion: boolean; label: string; language?: 'kk' | 'ru' | 'en' }
@@ -13,7 +13,7 @@ const sceneCopy = {
 }
 
 // Local textures avoid suspending the workspace on remote fonts, HDRs or models.
-function useScreenTexture(label: string) {
+function useScreenTexture(label: string, lid = false) {
   const texture = useMemo(() => {
     const canvas = document.createElement('canvas')
     canvas.width = 512
@@ -37,16 +37,24 @@ function useScreenTexture(label: string) {
       ctx.fillStyle = color
       ctx.fillRect(40 + (row % 2) * 24, 146 + row * 25, [238, 326, 190, 278, 150][row], 7)
     })
+    if (lid) {
+      ctx.clearRect(0, 0, 512, 320)
+      ctx.fillStyle = '#c9dcea'
+      ctx.font = '500 60px sans-serif'
+      ctx.textAlign = 'center'
+      ctx.fillText(label, 256, 180)
+    }
     const result = new CanvasTexture(canvas)
     result.colorSpace = SRGBColorSpace
     return result
-  }, [label])
+  }, [label, lid])
   useEffect(() => () => texture.dispose(), [texture])
   return texture
 }
 
 function Laptop({ blue = false }: { blue?: boolean }) {
   const screen = useScreenTexture(blue ? 'MacBook' : 'Lenovo LOQ')
+  const lid = useScreenTexture(blue ? 'MacBook' : 'Lenovo', true)
   return <group name={blue ? 'MacBook' : 'Lenovo-LOQ'}>
     <RoundedBox args={[1.1, 0.07, 0.73]} radius={0.025} smoothness={2} castShadow><meshStandardMaterial color={blue ? '#438bc3' : '#69758c'} roughness={0.42} metalness={0.4} /></RoundedBox>
     <mesh position={[0, 0.042, -0.09]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[0.88, 0.31]} /><meshStandardMaterial color="#172339" /></mesh>
@@ -55,7 +63,7 @@ function Laptop({ blue = false }: { blue?: boolean }) {
     <group position={[0, 0.33, -0.31]} rotation={[-0.16, 0, 0]}>
       <RoundedBox args={[1.1, 0.65, 0.045]} radius={0.02} smoothness={2} castShadow><meshStandardMaterial color={blue ? '#438bc3' : '#364258'} metalness={0.3} roughness={0.45} /></RoundedBox>
       <mesh position={[0, 0, 0.025]}><planeGeometry args={[1.0, 0.55]} /><meshBasicMaterial map={screen} toneMapped={false} /></mesh>
-      <mesh position={[0, 0, -0.026]} rotation={[0, Math.PI, 0]}><planeGeometry args={[0.38, 0.23]} /><meshBasicMaterial map={screen} toneMapped={false} /></mesh>
+      <mesh position={[0, 0, -0.026]} rotation={[0, Math.PI, 0]}><planeGeometry args={[0.5, 0.31]} /><meshBasicMaterial map={lid} transparent toneMapped={false} /></mesh>
     </group>
   </group>
 }
@@ -63,8 +71,8 @@ function Laptop({ blue = false }: { blue?: boolean }) {
 function Workspace() {
   const monitor = useScreenTexture('SOTSU')
   return <group name="workspace">
-    <mesh position={[0, -1.14, 0]} receiveShadow><cylinderGeometry args={[2.88, 2.98, 0.18, 64]} /><meshStandardMaterial color="#19233d" roughness={0.85} metalness={0.12} /></mesh>
-    <mesh position={[0, -1.045, 0]} rotation={[-Math.PI / 2, 0, 0]}><ringGeometry args={[2.72, 2.745, 64]} /><meshBasicMaterial color="#739ced" transparent opacity={0.45} /></mesh>
+    <mesh name="workspace-floor" position={[0, -1.075, 0]} receiveShadow><cylinderGeometry args={[2.88, 2.9, 0.035, 64]} /><meshStandardMaterial color="#10172b" roughness={0.98} metalness={0.02} transparent opacity={0.72} /></mesh>
+    <mesh position={[0, -1.054, 0]} rotation={[-Math.PI / 2, 0, 0]}><ringGeometry args={[2.74, 2.75, 64]} /><meshBasicMaterial color="#7787bd" transparent opacity={0.2} /></mesh>
     <group name="chair" position={[-1.15, 0, -0.14]}>
       <RoundedBox args={[1.43, 1.68, 0.3]} radius={0.14} smoothness={3} position={[0, 0.85, -0.43]} castShadow><meshStandardMaterial color="#737e90" roughness={0.9} /></RoundedBox>
       <RoundedBox args={[1.15, 1.35, 0.1]} radius={0.045} smoothness={2} position={[0, 0.88, -0.24]} castShadow><meshStandardMaterial color="#8791a2" roughness={0.95} /></RoundedBox>
@@ -80,7 +88,7 @@ function Workspace() {
       </group>)}
     </group>
     <Character position={[-1.15, 0.05, 0]} />
-    <group position={[-1.15, 0.59, 0.62]} rotation={[0, -0.08, 0]}><Laptop blue /></group>
+    <group position={[-1.15, 0.59, 0.62]} rotation={[0, Math.PI - 0.08, 0]}><Laptop blue /></group>
     <group name="desk" position={[0.99, 0.53, -0.08]}>
       <RoundedBox args={[2.4, 0.14, 1.65]} radius={0.05} smoothness={2} castShadow receiveShadow><meshStandardMaterial color="#263750" roughness={0.65} metalness={0.15} /></RoundedBox>
       {[-0.95, 0.95].map(x => <group key={x} position={[x, -0.77, 0]}>
@@ -92,12 +100,6 @@ function Workspace() {
       <RoundedBox name="SOTSU-monitor" args={[1.91, 1.04, 0.1]} radius={0.04} smoothness={2} position={[0, 0.91, -0.46]} castShadow><meshStandardMaterial color="#111c30" roughness={0.5} /></RoundedBox>
       <mesh position={[0, 0.91, -0.402]}><planeGeometry args={[1.76, 0.89]} /><meshBasicMaterial map={monitor} toneMapped={false} /></mesh>
       <group position={[0.12, 0.14, 0.38]} rotation={[0, -0.12, 0]}><Laptop /></group>
-    </group>
-    <group name="ambient-details" position={[0, 0, -1.64]}>
-      <mesh position={[-0.25, 0.72, 0]}><boxGeometry args={[0.025, 2.45, 0.025]} /><meshBasicMaterial color="#8b5cf6" /></mesh>
-      <mesh position={[-0.25, 1.94, 0]}><boxGeometry args={[3.6, 0.025, 0.025]} /><meshBasicMaterial color="#7966bd" /></mesh>
-      <mesh position={[1.55, 1.39, 0]}><boxGeometry args={[0.025, 1.1, 0.025]} /><meshBasicMaterial color="#7dd3fc" /></mesh>
-      {[0, 1, 2].map(i => <mesh key={i} position={[0.6 + i * 0.34, 1.65, 0]}><boxGeometry args={[0.18, 0.05, 0.06]} /><meshBasicMaterial color={i === 1 ? '#8b5cf6' : '#7dd3fc'} /></mesh>)}
     </group>
   </group>
 }
@@ -202,6 +204,21 @@ function supportsWebGL() {
   } catch { return false }
 }
 
+function WorkspaceCamera() {
+  const { camera, size, invalidate } = useThree()
+  useLayoutEffect(() => {
+    if (!(camera instanceof PerspectiveCamera)) return
+    // Fit the entire rotatable workspace; a lower eye line gives the seated person natural proportions.
+    const aspect = size.width / size.height
+    const distance = aspect < 1 ? 10.8 : 9.1
+    camera.position.set(distance * 0.42, 0.3 + distance * 0.3, distance * 0.857)
+    camera.lookAt(0, 0.35, 0)
+    camera.updateProjectionMatrix()
+    invalidate()
+  }, [camera, size.width, size.height, invalidate])
+  return null
+}
+
 export function HeroScene({ reducedMotion, label, language = 'kk' }: Props) {
   const [available, setAvailable] = useState(supportsWebGL)
   const [mobile, setMobile] = useState(() => window.matchMedia('(max-width: 600px)').matches)
@@ -216,18 +233,20 @@ export function HeroScene({ reducedMotion, label, language = 'kk' }: Props) {
   const fallback = <SceneFallback label={label} description={copy.fallback} />
   return <div className="scene-shell" role="group" aria-label={`${label}. ${copy.drag}. ${copy.keys}`} tabIndex={available ? 0 : undefined} aria-keyshortcuts="ArrowLeft ArrowRight">
     {!available ? fallback : <SceneBoundary fallback={fallback}>
-      <Canvas style={{ touchAction: 'pan-y' }} frameloop="demand" shadows={{ type: PCFShadowMap }} dpr={mobile ? 1 : [1, 1.5]} camera={{ position: [6.6, 5.1, 9.6], fov: 39, near: 0.1, far: 50 }} gl={{ antialias: true, powerPreference: 'low-power' }} fallback={fallback}
+      <Canvas style={{ touchAction: 'pan-y' }} frameloop="demand" shadows={{ type: PCFShadowMap }} dpr={mobile ? 1 : [1, 1.5]} camera={{ position: [3.82, 3.03, 7.8], fov: 37, near: 0.1, far: 50 }} gl={{ alpha: true, antialias: true, powerPreference: 'low-power' }} fallback={fallback}
         onCreated={({ camera, gl }) => {
-          camera.lookAt(0, 0.25, 0)
+          camera.lookAt(0, 0.35, 0)
+          gl.setClearColor('#080b16', 0)
           const lost = (event: Event) => { event.preventDefault(); setAvailable(false) }
           gl.domElement.addEventListener('webglcontextlost', lost)
           contextCleanup.current = () => gl.domElement.removeEventListener('webglcontextlost', lost)
         }}>
-        <color attach="background" args={['#0d1427']} />
-        <hemisphereLight args={['#d8e8ff', '#252449', 2.4]} />
-        <directionalLight position={[-3, 7, 5]} intensity={3.1} color="#eef5ff" castShadow shadow-mapSize={[mobile ? 512 : 1024, mobile ? 512 : 1024]} shadow-normalBias={0.035} shadow-camera-left={-4} shadow-camera-right={4} shadow-camera-top={4} shadow-camera-bottom={-4} />
-        <directionalLight position={[4, 3, -4]} intensity={2.2} color="#8e86ff" />
-        <pointLight position={[-2, 2, 3]} intensity={5} distance={8} color="#80d9ff" />
+        <WorkspaceCamera />
+        <hemisphereLight args={['#dce5fa', '#191927', 1.55]} />
+        <directionalLight position={[-4, 6, 7]} intensity={2.7} color="#fff0e4" castShadow shadow-mapSize={[mobile ? 512 : 1024, mobile ? 512 : 1024]} shadow-radius={3} shadow-normalBias={0.025} shadow-camera-left={-4} shadow-camera-right={4} shadow-camera-top={4} shadow-camera-bottom={-4} />
+        <directionalLight position={[4, 3, -4]} intensity={2.4} color="#9181f0" />
+        <directionalLight position={[-3, 2, -1]} intensity={1.4} color="#7cbbe6" />
+        <pointLight position={[1, 2, 4]} intensity={2} distance={8} color="#b8dafa" />
         <HorizontalRotation reducedMotion={reducedMotion}><Workspace /></HorizontalRotation>
       </Canvas>
     </SceneBoundary>}

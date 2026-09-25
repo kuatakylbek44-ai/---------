@@ -1,0 +1,114 @@
+{
+  "memory": [
+    {
+      "geometries": 129,
+      "textures": 8,
+      "triangles": 78712,
+      "calls": 205
+    },
+    {
+      "geometries": 129,
+      "textures": 8,
+      "triangles": 78712,
+      "calls": 205
+    },
+    {
+      "geometries": 129,
+      "textures": 8,
+      "triangles": 78712,
+      "calls": 205
+    },
+    {
+      "geometries": 129,
+      "textures": 8,
+      "triangles": 78712,
+      "calls": 205
+    },
+    {
+      "geometries": 129,
+      "textures": 8,
+      "triangles": 78712,
+      "calls": 205
+    },
+    {
+      "geometries": 129,
+      "textures": 8,
+      "triangles": 78712,
+      "calls": 205
+    },
+    {
+      "geometries": 129,
+      "textures": 8,
+      "triangles": 78712,
+      "calls": 205
+    },
+    {
+      "geometries": 129,
+      "textures": 8,
+      "triangles": 78712,
+      "calls": 205
+    },
+    {
+      "geometries": 129,
+      "textures": 8,
+      "triangles": 78712,
+      "calls": 205
+    },
+    {
+      "geometries": 129,
+      "textures": 8,
+      "triangles": 78712,
+      "calls": 205
+    },
+    {
+      "geometries": 129,
+      "textures": 8,
+      "triangles": 78712,
+      "calls": 205
+    },
+    {
+      "geometries": 129,
+      "textures": 8,
+      "triangles": 78712,
+      "calls": 205
+    }
+  ],
+  "production": [
+    {
+      "width": 390,
+      "errors": [],
+      "failed": [],
+      "canvas": {
+        "w": 390,
+        "h": 445
+      },
+      "blur": "blur(2.5px)",
+      "overflow": false,
+      "ctaNavigatesToContact": true
+    },
+    {
+      "width": 768,
+      "errors": [],
+      "failed": [],
+      "canvas": {
+        "w": 721,
+        "h": 560
+      },
+      "blur": "blur(3px)",
+      "overflow": false,
+      "ctaNavigatesToContact": true
+    },
+    {
+      "width": 1440,
+      "errors": [],
+      "failed": [],
+      "canvas": {
+        "w": 1038,
+        "h": 740
+      },
+      "blur": "blur(3.5px)",
+      "overflow": false,
+      "ctaNavigatesToContact": true
+    }
+  ]
+}

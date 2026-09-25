@@ -1,0 +1,70 @@
+{
+  "errors": [],
+  "checks": [
+    {
+      "name": "layered clear canvas drag,360,yaw only,demand idle",
+      "before": {
+        "rotation": [
+          0,
+          0,
+          0,
+          "XYZ"
+        ],
+        "camera": [
+          3.8219999999999996,
+          3.03,
+          7.798699999999999
+        ],
+        "frame": 1
+      },
+      "after": {
+        "rotation": [
+          0,
+          0.9418660606890874,
+          0,
+          "XYZ"
+        ],
+        "camera": [
+          3.8219999999999996,
+          3.03,
+          7.798699999999999
+        ],
+        "frame": 42
+      },
+      "rotated": {
+        "rotation": [
+          0,
+          7.225090581302993,
+          0,
+          "XYZ"
+        ],
+        "camera": [
+          3.8219999999999996,
+          3.03,
+          7.798699999999999
+        ],
+        "frame": 88
+      }
+    },
+    {
+      "name": "CTA foreground hit target",
+      "pass": true
+    },
+    {
+      "name": "reduced motion without damping",
+      "pass": true
+    },
+    {
+      "name": "WebGL context loss fallback",
+      "pass": true
+    },
+    {
+      "name": "mobile menu, horizontal touch rotate, native vertical scroll",
+      "pass": true
+    },
+    {
+      "name": "unavailable WebGL illustrated fallback",
+      "pass": true
+    }
+  ]
+}
