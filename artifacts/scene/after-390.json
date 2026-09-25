@@ -1,0 +1,186 @@
+{
+  "console": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting..."
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected."
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead."
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GPOS table LookupType 8 format 2"
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GPOS table LookupType 5 format 1"
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GSUB table LookupType 6 format 2"
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GSUB table LookupType 6 format 1"
+    },
+    {
+      "type": "warning",
+      "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead."
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GPOS table LookupType 8 format 2"
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GPOS table LookupType 5 format 1"
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GSUB table LookupType 6 format 2"
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GSUB table LookupType 6 format 1"
+    }
+  ],
+  "errors": [],
+  "failed": [],
+  "responses": [
+    {
+      "url": "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=0yaln0mlzyC4uP588a5Z71H3t-EekBl0Nj0jfNVMWCDRSMjyH6TbBs-ENGDWONAL",
+      "status": 200
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/1ef796af-ac59-4997-951e-46d4bd42c4c5",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/fee724f1-1144-4afa-a9a3-cae73816f71d",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/ced04240-f107-42ac-a207-b0d84f44ae97",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/9b73be3b-a7ab-4201-bb92-93fdcc5997a7",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/8da4c3ba-9a7a-4f65-a7d2-bd012ffbf647",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/f8e32c3e-5b44-403e-8a40-b0546aad3047",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/f48a3ef4-bf6b-4ed9-8bae-abf396cadca2",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/360b571e-5ad1-4b4b-9812-4cc1393b830c",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/6aa90e49-d2ff-492e-98d0-776b786d0d35",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/7ebd7e02-562b-477e-8d54-af9e96f2e994",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/df2220df-531e-4455-b938-9d42f6033af7",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/e2f2d8c8-d2bc-4a69-a8e5-3b0590d5ff98",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/39cd2e8e-ce90-4b0a-9ed1-54a74381420c",
+      "status": 200
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggqxSuXd.woff2",
+      "status": 200
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggOxSuXd.woff2",
+      "status": 200
+    },
+    {
+      "url": "https://raw.githack.com/pmndrs/drei-assets/456060a26bbeb8fdf79326f224b6d99b8bcce736/hdri/potsdamer_platz_1k.hdr",
+      "status": 301
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/gh/lojjic/unicode-font-resolver@v1.0.1/packages/data/codepoint-index/plane0/0-ff.json",
+      "status": 200
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4Cw.woff2",
+      "status": 200
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggexSg.woff2",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/gh/lojjic/unicode-font-resolver@v1.0.1/packages/data/font-meta/latin.json",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/gh/lojjic/unicode-font-resolver@v1.0.1/packages/data/font-files/latin/sans-serif.normal.100.woff",
+      "status": 200
+    },
+    {
+      "url": "https://raw.githubusercontent.com/pmndrs/drei-assets/456060a26bbeb8fdf79326f224b6d99b8bcce736/hdri/potsdamer_platz_1k.hdr",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/gh/lojjic/unicode-font-resolver@v1.0.1/packages/data/font-files/latin/sans-serif.normal.400.woff",
+      "status": 200
+    }
+  ],
+  "sizes": [
+    {
+      "tag": "DIV",
+      "class": "scene-shell",
+      "width": 362,
+      "height": 340
+    },
+    {
+      "tag": "DIV",
+      "class": "",
+      "width": 360,
+      "height": 338
+    },
+    {
+      "tag": "CANVAS",
+      "class": "",
+      "width": 360,
+      "height": 338
+    },
+    {
+      "tag": "DIV",
+      "class": "scene-tag",
+      "width": 187.5,
+      "height": 31
+    }
+  ]
+}

@@ -1,0 +1,190 @@
+{
+  "console": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting..."
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected."
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead."
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GPOS table LookupType 8 format 2"
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GPOS table LookupType 5 format 1"
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GSUB table LookupType 6 format 2"
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GSUB table LookupType 6 format 1"
+    },
+    {
+      "type": "warning",
+      "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead."
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GPOS table LookupType 8 format 2"
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GPOS table LookupType 5 format 1"
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GSUB table LookupType 6 format 2"
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GSUB table LookupType 6 format 1"
+    },
+    {
+      "type": "warning",
+      "text": "THREE.WebGLProgram: Program Info Log: (210,81-129): warning X4122: sum of 0.996094 and -2.98545e-017 cannot be represented accurately in double precision\n(209,37-61): warning X4122: sum of 1 and -1.49272e-017 cannot be represented accurately in double precision\n(210,82-106): warning X4122: sum of 1 and -1.49272e-017 cannot be represented accurately in double precision\n(209,37-61): warning X4122: sum of 1 and -1.66644e-018 cannot be represented accurately in double precision\n(210,82-106): warning X4122: sum of 1 and -1.66644e-018 cannot be represented accurately in double precision"
+    }
+  ],
+  "errors": [],
+  "failed": [],
+  "responses": [
+    {
+      "url": "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=nlqag7hjESxErwdgs5IQGAMlCViGS1BGGl5TJ0oMUOat1k8amptKxJG7mD-swc_v",
+      "status": 200
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/3bf2c1f2-209b-413a-8e57-54fcbebc711f",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/dc1ff5a0-c23a-49d1-9be0-6b296bfcd272",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/b5cde1dd-6baa-4a56-bc86-536a7531c4ed",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/c364d0ff-8949-4428-a69e-e813e4f8df9f",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/edff3f1c-6757-4e0c-98c1-8f4b950b0f2e",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/0329dcf3-ed52-48ad-b388-35c85ab4aac2",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/3d6027e5-f1ec-4a77-93c6-1077683f2442",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/36c49698-c0c0-43d3-a1db-dafca5121c92",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/302e6dbe-84ff-46fa-a2f6-560fdf32f1de",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/b7f0b048-0831-4bbe-b80a-f02a7a2d289b",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/2e607ee7-4545-4600-9d98-29ade032f5a2",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/24626f73-81f5-4d9d-8110-eaa64d84ef74",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/5ed8298c-3b51-4161-b355-3558bd5a047e",
+      "status": 200
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4Cw.woff2",
+      "status": 200
+    },
+    {
+      "url": "https://raw.githack.com/pmndrs/drei-assets/456060a26bbeb8fdf79326f224b6d99b8bcce736/hdri/potsdamer_platz_1k.hdr",
+      "status": 301
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggOxSuXd.woff2",
+      "status": 200
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggexSg.woff2",
+      "status": 200
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggqxSuXd.woff2",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/gh/lojjic/unicode-font-resolver@v1.0.1/packages/data/codepoint-index/plane0/0-ff.json",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/gh/lojjic/unicode-font-resolver@v1.0.1/packages/data/font-meta/latin.json",
+      "status": 200
+    },
+    {
+      "url": "https://raw.githubusercontent.com/pmndrs/drei-assets/456060a26bbeb8fdf79326f224b6d99b8bcce736/hdri/potsdamer_platz_1k.hdr",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/gh/lojjic/unicode-font-resolver@v1.0.1/packages/data/font-files/latin/sans-serif.normal.100.woff",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/gh/lojjic/unicode-font-resolver@v1.0.1/packages/data/font-files/latin/sans-serif.normal.400.woff",
+      "status": 200
+    }
+  ],
+  "sizes": [
+    {
+      "tag": "DIV",
+      "class": "scene-shell",
+      "width": 627,
+      "height": 570
+    },
+    {
+      "tag": "DIV",
+      "class": "",
+      "width": 625,
+      "height": 568
+    },
+    {
+      "tag": "CANVAS",
+      "class": "",
+      "width": 625,
+      "height": 568
+    },
+    {
+      "tag": "DIV",
+      "class": "scene-tag",
+      "width": 204.78125,
+      "height": 32
+    }
+  ]
+}

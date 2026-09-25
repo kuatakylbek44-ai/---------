@@ -1,0 +1,194 @@
+{
+  "console": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting..."
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected."
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead."
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GPOS table LookupType 8 format 2"
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GPOS table LookupType 5 format 1"
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GSUB table LookupType 6 format 2"
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GSUB table LookupType 6 format 1"
+    },
+    {
+      "type": "log",
+      "text": "SCENE_DIAGNOSTIC {\"camera\":[5.8,3.6,7.4],\"direction\":[-0.545523606728481,-0.2965953589980091,-0.783859163066167],\"originNDC\":[-0.14874304690746,-0.20059411085619738,0.9801634757346868],\"children\":6,\"characterMeshes\":12,\"frameloop\":\"always\",\"webgl\":false}"
+    },
+    {
+      "type": "warning",
+      "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead."
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GPOS table LookupType 8 format 2"
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GPOS table LookupType 5 format 1"
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GSUB table LookupType 6 format 2"
+    },
+    {
+      "type": "debug",
+      "text": "unsupported GSUB table LookupType 6 format 1"
+    },
+    {
+      "type": "warning",
+      "text": "THREE.WebGLProgram: Program Info Log: (210,81-129): warning X4122: sum of 0.996094 and -2.98545e-017 cannot be represented accurately in double precision\n(209,37-61): warning X4122: sum of 1 and -1.49272e-017 cannot be represented accurately in double precision\n(210,82-106): warning X4122: sum of 1 and -1.49272e-017 cannot be represented accurately in double precision\n(209,37-61): warning X4122: sum of 1 and -1.66644e-018 cannot be represented accurately in double precision\n(210,82-106): warning X4122: sum of 1 and -1.66644e-018 cannot be represented accurately in double precision"
+    }
+  ],
+  "errors": [],
+  "failed": [],
+  "responses": [
+    {
+      "url": "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=rGBWOm6XqQspM4fZPrx8J57HWfTgrbHYTyRy3_4ud2vWMVThdiqozU1ULRaTKpSI",
+      "status": 200
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/9696a60d-a053-4646-be17-7e6400e17aa2",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/8c1ed980-acee-4d50-82b0-ff94bd1d7fa5",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/c52ea4a7-940a-48c9-92aa-533cc1d3dc9e",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/e28eabdf-d02e-4be7-a132-c56deb6e71f6",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/f6068100-ebe7-49aa-b6fb-1c2213e66eae",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/d2a5fb56-1517-46ec-9f99-c960219881de",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/b3d48516-ed6f-40d4-9b86-c5ee2156d5e5",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/60f1a473-f6e2-4adc-8f24-6f9e2c9bd0db",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/af691530-d1c4-40cd-91b5-60bb2ca3debd",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/26ed33b6-52e4-41d4-b5e4-07ec42fa2501",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/25644385-ae80-42b6-99a2-c5942aad7176",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/72365d30-c48b-4bf2-bf37-877fb5d04f31",
+      "status": 200
+    },
+    {
+      "url": "blob:http://127.0.0.1:5173/6d7abb25-4a23-42a0-aedb-30ac0f561dc2",
+      "status": 200
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4Cw.woff2",
+      "status": 200
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggOxSuXd.woff2",
+      "status": 200
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggexSg.woff2",
+      "status": 200
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggqxSuXd.woff2",
+      "status": 200
+    },
+    {
+      "url": "https://raw.githack.com/pmndrs/drei-assets/456060a26bbeb8fdf79326f224b6d99b8bcce736/hdri/potsdamer_platz_1k.hdr",
+      "status": 301
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/gh/lojjic/unicode-font-resolver@v1.0.1/packages/data/codepoint-index/plane0/0-ff.json",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/gh/lojjic/unicode-font-resolver@v1.0.1/packages/data/font-meta/latin.json",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/gh/lojjic/unicode-font-resolver@v1.0.1/packages/data/font-files/latin/sans-serif.normal.100.woff",
+      "status": 200
+    },
+    {
+      "url": "https://raw.githubusercontent.com/pmndrs/drei-assets/456060a26bbeb8fdf79326f224b6d99b8bcce736/hdri/potsdamer_platz_1k.hdr",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/gh/lojjic/unicode-font-resolver@v1.0.1/packages/data/font-files/latin/sans-serif.normal.400.woff",
+      "status": 200
+    }
+  ],
+  "sizes": [
+    {
+      "tag": "DIV",
+      "class": "scene-shell",
+      "width": 627,
+      "height": 570
+    },
+    {
+      "tag": "DIV",
+      "class": "",
+      "width": 625,
+      "height": 568
+    },
+    {
+      "tag": "CANVAS",
+      "class": "",
+      "width": 625,
+      "height": 568
+    },
+    {
+      "tag": "DIV",
+      "class": "scene-tag",
+      "width": 204.78125,
+      "height": 32
+    }
+  ]
+}
