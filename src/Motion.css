@@ -1,0 +1,430 @@
+/* Motion enhances the existing layout without changing the portrait or scene. */
+.site-shell {
+  --motion-ease: cubic-bezier(.22, 1, .36, 1);
+  isolation: isolate;
+}
+
+.site-shell > main,
+.site-shell > .site-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.ambient-lights {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ambient-lights > span {
+  position: absolute;
+  display: block;
+  width: min(58vw, 740px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  opacity: .7;
+  animation: ambient-arrive 4.6s var(--motion-ease) both;
+}
+
+.ambient-orb--violet {
+  top: -26%;
+  right: -15%;
+  background: radial-gradient(circle, rgba(139, 92, 246, .17), rgba(139, 92, 246, .06) 36%, transparent 68%);
+}
+
+.ambient-orb--cyan {
+  bottom: -37%;
+  left: -22%;
+  background: radial-gradient(circle, rgba(125, 211, 252, .1), rgba(125, 211, 252, .025) 40%, transparent 68%);
+  animation-delay: 140ms !important;
+}
+
+.reading-progress {
+  position: fixed;
+  z-index: 30;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  pointer-events: none;
+  background: linear-gradient(90deg, var(--purple), #bca4ff 48%, var(--cyan));
+  transform: scaleX(0);
+  transform-origin: left center;
+  box-shadow: 0 0 12px rgba(125, 211, 252, .28);
+}
+
+.site-header {
+  animation: header-arrive 680ms var(--motion-ease) both;
+}
+
+.hero h1 {
+  color: var(--text);
+  background: linear-gradient(130deg, #fff 12%, #e5dcff 55%, #b9e5ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-reveal] {
+  transition:
+    opacity 720ms var(--motion-ease) var(--reveal-delay, 0ms),
+    translate 720ms var(--motion-ease) var(--reveal-delay, 0ms),
+    transform 280ms var(--motion-ease),
+    border-color 280ms ease,
+    background 280ms ease,
+    box-shadow 280ms ease;
+}
+
+[data-reveal='pending'] {
+  opacity: 0;
+  translate: 0 22px;
+}
+
+[data-reveal='visible'] {
+  opacity: 1;
+  translate: 0 0;
+}
+
+[data-reveal-kind='fade'] {
+  translate: none;
+}
+
+.nav a {
+  position: relative;
+}
+
+.nav a::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 6px;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--purple), var(--cyan));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 300ms var(--motion-ease);
+  pointer-events: none;
+}
+
+.nav a:focus-visible::after,
+.nav a[aria-current]::after {
+  transform: scaleX(1);
+}
+
+.button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition: transform 280ms var(--motion-ease), border-color 280ms ease, background 280ms ease, box-shadow 280ms ease;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(110deg, transparent 28%, rgba(255, 255, 255, .18) 48%, transparent 68%);
+  transform: translateX(-130%);
+  pointer-events: none;
+}
+
+.button:focus-visible::before {
+  animation: button-shine 680ms var(--motion-ease);
+}
+
+.button svg,
+.button-arrow,
+.social-row svg,
+.profile-socials svg,
+.contact-socials svg,
+.contact-option svg,
+.copy-button svg,
+.ugc-links svg,
+.site-footer a svg,
+.skill-icon,
+.service-icon {
+  transition: transform 300ms var(--motion-ease), color 220ms ease;
+}
+
+.brand-mark {
+  transition: border-color 240ms ease, box-shadow 240ms ease;
+}
+
+.profile-card {
+  border-color: rgba(167, 176, 192, .24);
+  box-shadow: 0 14px 48px rgba(8, 11, 22, .12), inset 0 1px 0 rgba(229, 220, 255, .045);
+}
+
+.skill-group,
+.service-card,
+.project-card {
+  position: relative;
+  isolation: isolate;
+  transition: transform 280ms var(--motion-ease), border-color 280ms ease, box-shadow 280ms ease;
+}
+
+.skill-group[data-reveal],
+.service-card[data-reveal],
+.project-card[data-reveal] {
+  transition:
+    opacity 720ms var(--motion-ease) var(--reveal-delay, 0ms),
+    translate 720ms var(--motion-ease) var(--reveal-delay, 0ms),
+    transform 280ms var(--motion-ease),
+    border-color 280ms ease,
+    box-shadow 280ms ease;
+}
+
+[data-reveal][data-reveal-instant] {
+  opacity: 1;
+  translate: none;
+  transition: transform 280ms var(--motion-ease), border-color 280ms ease, background 280ms ease, box-shadow 280ms ease;
+}
+
+[data-spotlight]::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(280px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%), rgba(125, 211, 252, .11), rgba(139, 92, 246, .045) 36%, transparent 70%);
+  opacity: 0;
+  transition: opacity 320ms ease;
+  pointer-events: none;
+}
+
+[data-spotlight] > * {
+  position: relative;
+  z-index: 1;
+}
+
+.project-cover .cover-grid {
+  transition: transform 650ms var(--motion-ease), opacity 400ms ease;
+}
+
+.skill-list span {
+  transition: border-color 240ms ease, color 240ms ease, background 240ms ease;
+}
+
+.profile-socials a,
+.copy-button {
+  transition: transform 280ms var(--motion-ease), color 240ms ease, border-color 240ms ease, background 240ms ease;
+}
+
+.contact-option {
+  transition: transform 280ms var(--motion-ease), border-color 240ms ease, color 240ms ease, background 240ms ease;
+}
+
+.button:active,
+.social-row a:active,
+.profile-socials a:active,
+.contact-socials a:active,
+.copy-button:active {
+  transform: translateY(0) scale(.98);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav a:hover::after {
+    transform: scaleX(1);
+  }
+
+  .brand:hover .brand-mark {
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 4px rgba(125, 211, 252, .07);
+  }
+
+  .button:hover::before {
+    animation: button-shine 680ms var(--motion-ease);
+  }
+
+  .button-primary:hover {
+    box-shadow: 0 12px 32px rgba(139, 92, 246, .35);
+  }
+
+  .button:hover svg,
+  .ugc-links a:hover svg:last-child,
+  .contact-option:hover > svg:last-child,
+  .site-footer a:hover svg {
+    transform: translate(2px, -2px);
+  }
+
+  .button:hover .button-arrow {
+    transform: translateY(3px);
+  }
+
+  .social-row a:hover svg,
+  .profile-socials a:hover svg,
+  .contact-socials a:hover svg {
+    transform: translateY(-1px) rotate(-7deg);
+  }
+
+  .profile-socials a:hover,
+  .copy-button:hover {
+    transform: translateY(-2px);
+  }
+
+  .contact-option:hover {
+    transform: translateX(4px);
+  }
+
+  .skill-group:hover,
+  .service-card:hover,
+  .project-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(125, 211, 252, .42);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .16);
+  }
+
+  [data-spotlight]:hover::before {
+    opacity: 1;
+  }
+
+  .skill-group:hover .skill-icon,
+  .service-card:hover .service-icon {
+    transform: translateY(-2px) rotate(-7deg);
+    color: #c3eaff;
+  }
+
+  .skill-group:hover .skill-list span {
+    border-color: rgba(125, 211, 252, .22);
+    color: #c6d4e5;
+    background: rgba(125, 211, 252, .025);
+  }
+
+  .project-card:hover .cover-grid {
+    transform: translate(-5px, 4px);
+    opacity: .6;
+  }
+}
+
+@media (max-width: 900px) {
+  .nav.is-open {
+    transform-origin: top center;
+    animation: navigation-open 220ms var(--motion-ease) both;
+  }
+
+  .nav a::after {
+    right: 8px;
+    left: 8px;
+  }
+
+  .ambient-lights > span {
+    width: 86vw;
+    opacity: .5;
+  }
+
+  .ambient-orb--violet {
+    top: -9%;
+    right: -40%;
+  }
+
+  .ambient-orb--cyan {
+    bottom: -8%;
+    left: -46%;
+  }
+
+  [data-reveal='pending'] {
+    translate: 0 14px;
+  }
+
+  [data-reveal-kind='fade'] {
+    translate: none;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  [data-spotlight]::before {
+    display: none;
+  }
+}
+
+@keyframes ambient-arrive {
+  from { opacity: .25; transform: translate3d(24px, 28px, 0) scale(.93); }
+  to { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes header-arrive {
+  from { opacity: 0; translate: 0 -8px; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+@keyframes button-shine {
+  from { transform: translateX(-130%); }
+  to { transform: translateX(130%); }
+}
+
+@keyframes navigation-open {
+  from { opacity: 0; transform: translateY(-6px) scaleY(.97); }
+  to { opacity: 1; transform: translateY(0) scaleY(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal='pending'],
+  [data-reveal='visible'] {
+    opacity: 1 !important;
+    translate: none !important;
+    transition: none !important;
+  }
+
+  .site-header,
+  .nav,
+  .brand-mark,
+  .ambient-lights > span,
+  .button,
+  .button::before,
+  .nav a::after,
+  .button svg,
+  .button-arrow,
+  .skill-group,
+  .service-card,
+  .project-card,
+  .skill-icon,
+  .skill-list span,
+  .service-icon,
+  [data-spotlight]::before,
+  .project-cover .cover-grid,
+  .social-row a,
+  .social-row svg,
+  .profile-socials a,
+  .profile-socials svg,
+  .contact-socials a,
+  .contact-socials svg,
+  .copy-button,
+  .copy-button svg,
+  .contact-option,
+  .contact-option svg,
+  .ugc-links svg,
+  .site-footer a svg {
+    animation: none !important;
+    transition: none !important;
+    translate: none !important;
+    transform: none !important;
+  }
+
+  .site-header,
+  .nav.is-open {
+    opacity: 1 !important;
+  }
+
+  .ambient-lights > span {
+    opacity: .5;
+  }
+
+  .button::before,
+  [data-spotlight]::before,
+  .reading-progress {
+    display: none;
+  }
+
+  .nav a::after {
+    opacity: 0;
+  }
+
+  .nav a:hover::after,
+  .nav a:focus-visible::after,
+  .nav a[aria-current]::after {
+    opacity: 1;
+  }
+}

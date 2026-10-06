@@ -2,7 +2,10 @@ import { Component, Suspense, lazy, useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { ArrowUpRight, Check, Clipboard, Code2, ExternalLink, Layers3, Mail, Menu, Smartphone, Sparkles, X } from 'lucide-react'
 import './App.css'
+import './Motion.css'
 import { SocialIcon } from './components/SocialIcon'
+import { ProfileSection } from './components/ProfileSection'
+import { usePortfolioMotion } from './hooks/usePortfolioMotion'
 import type { SocialPlatform } from './components/SocialIcon'
 import { profile } from './data/profile'
 import { projects } from './data/projects'
@@ -27,10 +30,12 @@ function App() {
     return saved === 'ru' || saved === 'en' ? saved : 'kk'
   })
   const [menuOpen, setMenuOpen] = useState(false)
+  const siteRef = useRef<HTMLDivElement>(null)
   const navigationRef = useRef<HTMLElement>(null)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
   const [copied, setCopied] = useState<'copied' | 'failed' | null>(null)
   const [reducedMotion, setReducedMotion] = useState(false)
+  usePortfolioMotion(siteRef, reducedMotion)
   const t = translations[language]
   useEffect(() => { localStorage.setItem('portfolio-language', language); document.documentElement.lang = language }, [language])
   useEffect(() => { const media = window.matchMedia('(prefers-reduced-motion: reduce)'); const update = () => setReducedMotion(media.matches); update(); media.addEventListener('change', update); return () => media.removeEventListener('change', update) }, [])
@@ -62,8 +67,10 @@ function App() {
   const changeLanguage = (next: Language) => { setLanguage(next); setMenuOpen(false) }
   const copyEmail = async () => { try { await navigator.clipboard.writeText(profile.contacts.email); setCopied('copied') } catch { setCopied('failed') }; window.setTimeout(() => setCopied(null), 2200) }
   const mail = (subject: string) => `mailto:${profile.contacts.email}?subject=${encodeURIComponent(subject)}`
-  return <div className="site-shell">
-    <header className="site-header"><a className="brand" href="#top" aria-label="ayazbala home"><span className="brand-mark">a</span><span>{profile.brand}</span></a><nav id="primary-navigation" ref={navigationRef} className={`nav ${menuOpen ? 'is-open' : ''}`} aria-label="Main navigation">{Object.entries(t.nav).map(([id, label]) => <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)}>{label}</a>)}</nav><div className="header-actions"><div className="language-switcher" aria-label="Language">{(['kk', 'ru', 'en'] as Language[]).map(item => <button key={item} className={language === item ? 'active' : ''} onClick={() => changeLanguage(item)}>{item === 'kk' ? 'ҚАЗ' : item === 'ru' ? 'РУС' : 'ENG'}</button>)}</div><button ref={menuButtonRef} className="menu-button" aria-controls="primary-navigation" aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} onClick={() => setMenuOpen(open => !open)}>{menuOpen ? <X size={20} /> : <Menu size={20} />}</button></div></header>
+  return <div className="site-shell" ref={siteRef}>
+    <div className="ambient-lights" aria-hidden="true"><span className="ambient-orb ambient-orb--violet" /><span className="ambient-orb ambient-orb--cyan" /></div>
+    <div className="reading-progress" aria-hidden="true" />
+    <header className="site-header"><a className="brand" href="#profile" aria-label={t.profile.open} title={t.profile.open} onClick={() => setMenuOpen(false)}><img className="brand-mark" src="/images/avatar.jpg" alt="" width={28} height={28} /><span>{profile.brand}</span></a><nav id="primary-navigation" ref={navigationRef} className={`nav ${menuOpen ? 'is-open' : ''}`} aria-label="Main navigation">{Object.entries(t.nav).map(([id, label]) => <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)}>{label}</a>)}</nav><div className="header-actions"><div className="language-switcher" aria-label="Language">{(['kk', 'ru', 'en'] as Language[]).map(item => <button key={item} className={language === item ? 'active' : ''} onClick={() => changeLanguage(item)}>{item === 'kk' ? 'ҚАЗ' : item === 'ru' ? 'РУС' : 'ENG'}</button>)}</div><button ref={menuButtonRef} className="menu-button" aria-controls="primary-navigation" aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} onClick={() => setMenuOpen(open => !open)}>{menuOpen ? <X size={20} /> : <Menu size={20} />}</button></div></header>
     <main id="top">
       <section className="hero container">
         <div className="hero-copy">
@@ -80,6 +87,7 @@ function App() {
           <SceneBoundary label={t.hero.sceneLabel}><Suspense fallback={<ScenePlaceholder label={t.hero.sceneLabel} loading />}><HeroScene reducedMotion={reducedMotion} label={t.hero.sceneLabel} language={language} /></Suspense></SceneBoundary>
         </div>
       </section>
+      <ProfileSection language={language}><SocialLinks className="profile-socials" /></ProfileSection>
       <section id="about" className="section about container"><div className="section-index">{t.about.kicker}</div><div className="about-grid"><div><h2>{t.about.title}</h2></div><div className="about-detail"><p className="body-large">{t.about.text}</p><div className="profile-meta"><div><span>{t.about.university}</span><strong>{t.about.study}</strong></div><div className="initials" aria-hidden="true">ҚА</div></div></div></div></section>
       <section id="skills" className="section skills-section"><div className="container"><div className="section-index">{t.skills.kicker}</div><div className="section-heading"><h2>{t.skills.title}</h2></div><div className="skills-grid">{Object.entries(skills).map(([key, items], index) => <div className="skill-group" key={key}><div className="skill-icon">{index === 0 ? <Code2 /> : index === 1 ? <Layers3 /> : index === 2 ? <Smartphone /> : index === 3 ? <Sparkles /> : <span>✦</span>}</div><h3>{t.skills[key as keyof typeof t.skills]}</h3><div className="skill-list">{items.map(item => <span key={item}>{item}</span>)}</div></div>)}</div></div></section>
       <section id="services" className="section container"><div className="section-index">{t.services.kicker}</div><div className="section-heading split"><h2>{t.services.title}</h2><p>{t.hero.text}</p></div><div className="services-grid"><ServiceCard number="01" icon={<Code2 />} title={t.services.webTitle} text={t.services.webText} /><ServiceCard number="02" icon={<Smartphone />} title={t.services.mobileTitle} text={t.services.mobileText} /><ServiceCard number="03" icon={<Sparkles />} title={t.services.ugcTitle} text={t.services.ugcText} /></div></section>
@@ -95,26 +103,8 @@ function SocialLinks({ className }: { className: string }) {
 
 function ScenePlaceholder({ label, loading = false }: { label: string; loading?: boolean }) {
   return <div className={`scene-shell ${loading ? 'scene-loading' : 'scene-placeholder'}`} role="img" aria-label={label} aria-busy={loading}>
-    <svg className="scene-preview" viewBox="0 0 560 500" width="100%" height="100%" aria-hidden="true" focusable="false">
-      <ellipse cx="282" cy="389" rx="201" ry="45" fill="#182540" stroke="#7dd3fc" strokeOpacity=".2" />
-      <path d="m115 361 153-64 178 61-155 68Z" fill="#202e4b" stroke="#7dd3fc" strokeOpacity=".2" />
-      <rect x="151" y="210" width="106" height="119" rx="26" fill="#667286" />
-      <path d="M208 328v49m-39 13 39-13 37 11" fill="none" stroke="#8e9cb1" strokeWidth="8" strokeLinecap="round" />
-      <path d="m155 311 44 21 69-30-46-20Z" fill="#818d9f" />
-      <circle cx="207" cy="176" r="28" fill="#dbab91" />
-      <path d="M180 176c-8-42 58-52 56-6l-13-9-30 5Z" fill="#141b29" />
-      <path d="M190 207c-19 10-24 31-22 69l51 21 29-41-16-37Z" fill="#141b29" stroke="#37445b" />
-      <path d="m193 294 45 9 16 54m-35-58-2 43 15 34" fill="none" stroke="#111724" strokeWidth="22" strokeLinecap="round" />
-      <path d="m229 365 23 9m-32 9 23 8" fill="none" stroke="#808da4" strokeWidth="12" strokeLinecap="round" />
-      <path d="m250 306 2 68m147-79-2 64" stroke="#6c7c98" strokeWidth="10" />
-      <path d="m235 275 108-43 88 40-112 49-84-37Z" fill="#56647e" stroke="#879bbb" />
-      <path d="m307 160 90 20v72l-90-21Z" fill="#0c1527" stroke="#668bb0" strokeWidth="5" />
-      <path d="m319 184 38 9m-38 6 56 13m-56 3 27 6" stroke="#7dd3fc" strokeWidth="3" strokeLinecap="round" />
-      <path d="M350 243v23m-15 7 33-9" fill="none" stroke="#7c8ea8" strokeWidth="5" />
-      <path d="m239 253 53 11-5-43-52-11Z" fill="#4e91c8" stroke="#7dd3fc" strokeWidth="2" />
-      <path d="m239 253 53 11-23 10-52-12Z" fill="#79b4df" />
-      <path d="m183 228 18 24 28 4" fill="none" stroke="#dbab91" strokeWidth="12" strokeLinecap="round" />
-    </svg>
+    <img className="scene-preview" src="/images/character-preview.png" alt="" width={800} height={1000} />
+
     <div className="scene-tag"><span /> {label}</div>
   </div>
 }

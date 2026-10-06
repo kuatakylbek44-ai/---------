@@ -7,9 +7,9 @@ import { Character } from './Character'
 
 type Props = { reducedMotion: boolean; label: string; language?: 'kk' | 'ru' | 'en' }
 const sceneCopy = {
-  kk: { drag: 'Солға/оңға сүйреңіз', keys: 'Айналдыру: ← → пернелері', fallback: '3D орнына жұмыс кеңістігінің иллюстрациясы' },
-  ru: { drag: 'Потяните влево / вправо', keys: 'Поворот: клавиши ← →', fallback: 'Иллюстрация рабочего пространства вместо 3D' },
-  en: { drag: 'Drag left / right', keys: 'Rotate with the ← → keys', fallback: 'Workspace illustration shown in place of 3D' },
+  kk: { drag: 'Солға/оңға сүйреңіз', keys: 'Айналдыру: ← → пернелері', fallback: '3D орнына кейіпкердің дайын көрінісі көрсетілді' },
+  ru: { drag: 'Потяните влево / вправо', keys: 'Поворот: клавиши ← →', fallback: 'Показан готовый вид персонажа вместо 3D' },
+  en: { drag: 'Drag left / right', keys: 'Rotate with the ← → keys', fallback: 'Character preview shown in place of 3D' },
 }
 
 // Local textures avoid suspending the workspace on remote fonts, HDRs or models.
@@ -68,28 +68,13 @@ function Laptop({ blue = false }: { blue?: boolean }) {
   </group>
 }
 
-function Workspace() {
+function Workspace({ reducedMotion }: { reducedMotion: boolean }) {
   const monitor = useScreenTexture('SOTSU')
   return <group name="workspace">
     <mesh name="workspace-floor" position={[0, -1.075, 0]} receiveShadow><cylinderGeometry args={[2.88, 2.9, 0.035, 64]} /><meshStandardMaterial color="#10172b" roughness={0.98} metalness={0.02} transparent opacity={0.72} /></mesh>
     <mesh position={[0, -1.054, 0]} rotation={[-Math.PI / 2, 0, 0]}><ringGeometry args={[2.74, 2.75, 64]} /><meshBasicMaterial color="#7787bd" transparent opacity={0.2} /></mesh>
-    <group name="chair" position={[-1.15, 0, -0.14]}>
-      <RoundedBox args={[1.43, 1.68, 0.3]} radius={0.14} smoothness={3} position={[0, 0.85, -0.43]} castShadow><meshStandardMaterial color="#737e90" roughness={0.9} /></RoundedBox>
-      <RoundedBox args={[1.15, 1.35, 0.1]} radius={0.045} smoothness={2} position={[0, 0.88, -0.24]} castShadow><meshStandardMaterial color="#8791a2" roughness={0.95} /></RoundedBox>
-      <RoundedBox args={[1.43, 0.22, 1.13]} radius={0.1} smoothness={3} castShadow><meshStandardMaterial color="#7b879a" roughness={0.9} /></RoundedBox>
-      {[-0.76, 0.76].map(x => <group key={x} position={[x, 0.29, 0.09]}>
-        <RoundedBox args={[0.15, 0.12, 0.75]} radius={0.04} smoothness={2} castShadow><meshStandardMaterial color="#505c70" /></RoundedBox>
-        <mesh position={[0, -0.21, -0.2]}><cylinderGeometry args={[0.035, 0.035, 0.4, 10]} /><meshStandardMaterial color="#79879e" metalness={0.5} roughness={0.4} /></mesh>
-      </group>)}
-      <mesh position={[0, -0.5, 0]} castShadow><cylinderGeometry args={[0.07, 0.085, 0.83, 12]} /><meshStandardMaterial color="#97a4b9" metalness={0.6} roughness={0.35} /></mesh>
-      {[0, 1, 2, 3, 4].map(i => <group key={i} rotation={[0, i * Math.PI * 0.4, 0]}>
-        <mesh position={[0.3, -0.91, 0]} rotation={[0, 0, Math.PI / 2]} castShadow><cylinderGeometry args={[0.035, 0.05, 0.6, 8]} /><meshStandardMaterial color="#6c778c" metalness={0.45} /></mesh>
-        <mesh position={[0.59, -0.96, 0]}><sphereGeometry args={[0.07, 12, 8]} /><meshStandardMaterial color="#101624" /></mesh>
-      </group>)}
-    </group>
-    <Character position={[-1.15, 0.05, 0]} />
-    <group position={[-1.15, 0.59, 0.62]} rotation={[0, Math.PI - 0.08, 0]}><Laptop blue /></group>
-    <group name="desk" position={[0.99, 0.53, -0.08]}>
+    <Character position={[.82, -1.035, .56]} rotation={[0, .32, 0]} reducedMotion={reducedMotion} />
+    <group name="desk" position={[-1.18, 0.35, -.38]}>
       <RoundedBox args={[2.4, 0.14, 1.65]} radius={0.05} smoothness={2} castShadow receiveShadow><meshStandardMaterial color="#263750" roughness={0.65} metalness={0.15} /></RoundedBox>
       {[-0.95, 0.95].map(x => <group key={x} position={[x, -0.77, 0]}>
         <mesh castShadow><boxGeometry args={[0.1, 1.45, 0.85]} /><meshStandardMaterial color="#46546c" metalness={0.4} roughness={0.45} /></mesh>
@@ -99,7 +84,7 @@ function Workspace() {
       <mesh position={[0, 0.36, -0.46]}><boxGeometry args={[0.08, 0.5, 0.08]} /><meshStandardMaterial color="#7185a2" metalness={0.5} /></mesh>
       <RoundedBox name="SOTSU-monitor" args={[1.91, 1.04, 0.1]} radius={0.04} smoothness={2} position={[0, 0.91, -0.46]} castShadow><meshStandardMaterial color="#111c30" roughness={0.5} /></RoundedBox>
       <mesh position={[0, 0.91, -0.402]}><planeGeometry args={[1.76, 0.89]} /><meshBasicMaterial map={monitor} toneMapped={false} /></mesh>
-      <group position={[0.12, 0.14, 0.38]} rotation={[0, -0.12, 0]}><Laptop /></group>
+      <group position={[-.48, 0.14, 0.3]} rotation={[0, .14, 0]}><Laptop blue /></group>
     </group>
   </group>
 }
@@ -171,19 +156,8 @@ function HorizontalRotation({ reducedMotion, children }: { reducedMotion: boolea
 
 function SceneFallback({ label, description }: { label: string; description: string }) {
   return <div className="scene-fallback" role="img" aria-label={`${label}. ${description}`}>
-    <svg viewBox="0 0 360 280" width="320" aria-hidden="true">
-      <ellipse cx="180" cy="236" rx="150" ry="26" fill="#192b47" />
-      <rect x="47" y="83" width="86" height="129" rx="22" fill="#69788e" />
-      <path d="M122 238v-60h171v60M119 176h180" fill="none" stroke="#71829d" strokeWidth="10" />
-      <rect x="181" y="68" width="112" height="79" rx="6" fill="#122440" stroke="#7dd3fc" strokeWidth="2" />
-      <text x="237" y="111" fill="#7dd3fc" textAnchor="middle" fontSize="17">SOTSU</text>
-      <path d="M237 148v24" stroke="#71829d" strokeWidth="7" />
-      <path d="M82 161v63m28-63v63" stroke="#171b2c" strokeWidth="19" strokeLinecap="round" />
-      <rect x="66" y="111" width="62" height="66" rx="19" fill="#111624" />
-      <circle cx="98" cy="86" r="26" fill="#d4a187" /><path d="M72 80q-4-39 41-22q17 7 12 25" fill="#171b2a" />
-      <path d="M57 168h90l-12-46H69z" fill="#4e91c8" /><circle cx="103" cy="145" r="4" fill="#c9efff" />
-      <path d="M30 56h127M305 147v-100" stroke="#8b5cf6" strokeWidth="2" opacity=".7" />
-    </svg>
+    <img className="scene-fallback-portrait" src="/images/character-preview.png" alt="" width={800} height={1000} />
+
     <p>{label}</p><small>{description}</small>
   </div>
 }
@@ -208,11 +182,11 @@ function WorkspaceCamera() {
   const { camera, size, invalidate } = useThree()
   useLayoutEffect(() => {
     if (!(camera instanceof PerspectiveCamera)) return
-    // Fit the entire rotatable workspace; a lower eye line gives the seated person natural proportions.
+    // Keep the standing portrait prominent and view the face near eye level.
     const aspect = size.width / size.height
-    const distance = aspect < 1 ? 10.8 : 9.1
-    camera.position.set(distance * 0.42, 0.3 + distance * 0.3, distance * 0.857)
-    camera.lookAt(0, 0.35, 0)
+    const distance = aspect < 1 ? 8.8 : 8.6
+    camera.position.set(distance * 0.42, 0.65 + distance * 0.19, distance * 0.857)
+    camera.lookAt(0, 0.65, 0)
     camera.updateProjectionMatrix()
     invalidate()
   }, [camera, size.width, size.height, invalidate])
@@ -235,19 +209,19 @@ export function HeroScene({ reducedMotion, label, language = 'kk' }: Props) {
     {!available ? fallback : <SceneBoundary fallback={fallback}>
       <Canvas style={{ touchAction: 'pan-y' }} frameloop="demand" shadows={{ type: PCFShadowMap }} dpr={mobile ? 1 : [1, 1.5]} camera={{ position: [3.82, 3.03, 7.8], fov: 37, near: 0.1, far: 50 }} gl={{ alpha: true, antialias: true, powerPreference: 'low-power' }} fallback={fallback}
         onCreated={({ camera, gl }) => {
-          camera.lookAt(0, 0.35, 0)
+          camera.lookAt(0, 0.65, 0)
           gl.setClearColor('#080b16', 0)
           const lost = (event: Event) => { event.preventDefault(); setAvailable(false) }
           gl.domElement.addEventListener('webglcontextlost', lost)
           contextCleanup.current = () => gl.domElement.removeEventListener('webglcontextlost', lost)
         }}>
         <WorkspaceCamera />
-        <hemisphereLight args={['#dce5fa', '#191927', 1.55]} />
-        <directionalLight position={[-4, 6, 7]} intensity={2.7} color="#fff0e4" castShadow shadow-mapSize={[mobile ? 512 : 1024, mobile ? 512 : 1024]} shadow-radius={3} shadow-normalBias={0.025} shadow-camera-left={-4} shadow-camera-right={4} shadow-camera-top={4} shadow-camera-bottom={-4} />
-        <directionalLight position={[4, 3, -4]} intensity={2.4} color="#9181f0" />
-        <directionalLight position={[-3, 2, -1]} intensity={1.4} color="#7cbbe6" />
-        <pointLight position={[1, 2, 4]} intensity={2} distance={8} color="#b8dafa" />
-        <HorizontalRotation reducedMotion={reducedMotion}><Workspace /></HorizontalRotation>
+        <hemisphereLight args={['#e6e8ee', '#25212a', .95]} />
+        <directionalLight position={[-4, 6, 7]} intensity={1.85} color="#fff5e9" castShadow shadow-mapSize={[mobile ? 512 : 1024, mobile ? 512 : 1024]} shadow-radius={3} shadow-normalBias={0.025} shadow-camera-left={-4} shadow-camera-right={4} shadow-camera-top={4} shadow-camera-bottom={-4} />
+        <directionalLight position={[4, 3, -4]} intensity={1.45} color="#9f94e5" />
+        <directionalLight position={[-3, 2, -1]} intensity={.9} color="#badce8" />
+        <pointLight position={[1, 2, 4]} intensity={1.2} distance={8} color="#b8dafa" />
+        <HorizontalRotation reducedMotion={reducedMotion}><Workspace reducedMotion={reducedMotion} /></HorizontalRotation>
       </Canvas>
     </SceneBoundary>}
     {available && <div className="scene-interaction-hint" aria-hidden="true"><span>↔</span> {copy.drag}</div>}
