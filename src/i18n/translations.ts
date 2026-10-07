@@ -23,7 +23,14 @@ export const translations: Record<Language, Translation> = {
     services: { kicker: '03 / бағыттар', title: 'Қай бағытта бірге жұмыс істей аламыз?', webTitle: 'Веб-жобалар', webText: 'Жеке сайттар, портфолио, landing page және веб-интерфейстер.', mobileTitle: 'Мобильді жобалар', mobileText: 'Мобильді қосымша интерфейстері мен прототиптері.', ugcTitle: 'UGC контент', ugcText: 'Технологиялық өнімдерді таныстыру, Reels, қысқа видеолар, өнім демонстрациясы және desk setup контенті.' },
     projects: { kicker: '04 / таңдалған бағыт', title: 'Жобалар', text: 'Жұмыс материалдары толықтырылған сайын бұл бөлім жаңарады.', empty: 'Толық ақпарат кейін қосылады', link: 'Сілтеме кейін қосылады' },
     ugc: { kicker: '05 / creator space', title: 'UGC портфолиосы', text: 'Брендтерге арнап жасаған Reels, видеоларым мен посттарым.', empty: 'UGC жұмыс үлгілері жақында қосылады', instagram: 'Instagram профилі', tiktok: 'TikTok профилі' },
-    contact: { kicker: '06 / байланыс', title: 'Бірге жақсы жоба жасайық', text: 'Жұмыс немесе тәжірибе, сайт немесе қосымша, UGC серіктестік туралы сөйлесуге ашықпын.', work: 'Жұмыс немесе тәжірибе', website: 'Сайт немесе қосымша', collab: 'UGC серіктестік', email: 'Email жазу', copy: 'Email көшіру', copied: 'Көшірілді', copyFailed: 'Көшіру мүмкін болмады', phone: 'Телефон', open: 'Ашу' },
+    contact: {
+      kicker: '06 / байланыс', title: 'Бірге жақсы жоба жасайық', text: 'Жұмыс немесе тәжірибе, сайт немесе қосымша, UGC серіктестік туралы сөйлесуге ашықпын.',
+      work: 'Жұмыс немесе тәжірибе', website: 'Сайт немесе қосымша', collab: 'UGC серіктестік',
+      workMessage: 'Сәлеметсіз бе! Сізге жұмыс немесе тәжірибеден өту мүмкіндігін ұсынғым келеді. Ұсыныстың шарттары мен алдағы қадамдарды талқыласақ бола ма?',
+      websiteMessage: 'Сәлеметсіз бе! Сайт немесе қосымша жасатқым келеді. Жобаның талаптарын, орындалу мерзімін және құнын талқыласақ бола ма?',
+      collabMessage: 'Сәлеметсіз бе! Брендімізге UGC контент жасау бойынша сізбен серіктестік орнатқымыз келеді. Контент форматын, жұмыс көлемін және ынтымақтастық шарттарын талқыласақ бола ма?',
+      email: 'Email жазу', copy: 'Email көшіру', copied: 'Көшірілді', copyFailed: 'Көшіру мүмкін болмады', phone: 'Телефон', open: 'Ашу',
+    },
     footer: { note: 'Студенттік портфолио · 2026', top: 'Жоғарыға' },
   },
   ru: {
@@ -35,7 +42,14 @@ export const translations: Record<Language, Translation> = {
     services: { kicker: '03 / направления', title: 'В каких задачах можем поработать вместе?', webTitle: 'Веб-проекты', webText: 'Персональные сайты, портфолио, landing page и веб-интерфейсы.', mobileTitle: 'Мобильные проекты', mobileText: 'Интерфейсы и прототипы мобильных приложений.', ugcTitle: 'UGC-контент', ugcText: 'Презентация технологичных продуктов, Reels, короткие видео, демонстрации и desk setup контент.' },
     projects: { kicker: '04 / выбранное направление', title: 'Проекты', text: 'Раздел будет обновляться по мере добавления материалов.', empty: 'Подробная информация будет добавлена позже', link: 'Ссылка будет добавлена позже' },
     ugc: { kicker: '05 / creator space', title: 'UGC-портфолио', text: 'Reels, видео и посты, которые я создал для брендов.', empty: 'Примеры UGC-работ скоро появятся', instagram: 'Профиль Instagram', tiktok: 'Профиль TikTok' },
-    contact: { kicker: '06 / контакт', title: 'Давайте создадим хороший проект', text: 'Открыт к разговору о работе или практике, сайте или приложении, UGC-сотрудничестве.', work: 'Работа или практика', website: 'Сайт или приложение', collab: 'UGC-сотрудничество', email: 'Написать на email', copy: 'Скопировать email', copied: 'Скопировано', copyFailed: 'Не удалось скопировать', phone: 'Телефон', open: 'Открыть' },
+    contact: {
+      kicker: '06 / контакт', title: 'Давайте создадим хороший проект', text: 'Открыт к разговору о работе или практике, сайте или приложении, UGC-сотрудничестве.',
+      work: 'Работа или практика', website: 'Сайт или приложение', collab: 'UGC-сотрудничество',
+      workMessage: 'Здравствуйте! Хочу предложить вам работу или стажировку. Можем обсудить обязанности, условия и дальнейшие шаги?',
+      websiteMessage: 'Здравствуйте! Хочу заказать у вас разработку сайта или приложения. Можем обсудить требования к проекту, сроки и стоимость?',
+      collabMessage: 'Здравствуйте! Хотим предложить вам сотрудничество по созданию UGC-контента для нашего бренда. Можем обсудить формат контента, объём работ и условия сотрудничества?',
+      email: 'Написать на email', copy: 'Скопировать email', copied: 'Скопировано', copyFailed: 'Не удалось скопировать', phone: 'Телефон', open: 'Открыть',
+    },
     footer: { note: 'Студенческое портфолио · 2026', top: 'Наверх' },
   },
   en: {
@@ -47,7 +61,14 @@ export const translations: Record<Language, Translation> = {
     services: { kicker: '03 / directions', title: 'What can we work on together?', webTitle: 'Web projects', webText: 'Personal websites, portfolios, landing pages and web interfaces.', mobileTitle: 'Mobile projects', mobileText: 'Mobile app interfaces and prototypes.', ugcTitle: 'UGC content', ugcText: 'Technology product features, Reels, short videos, product demos and desk setup content.' },
     projects: { kicker: '04 / selected direction', title: 'Projects', text: 'This section will grow as work materials are added.', empty: 'Full information will be added later', link: 'Link will be added later' },
     ugc: { kicker: '05 / creator space', title: 'UGC portfolio', text: 'Reels, videos and posts I created for brands.', empty: 'UGC work samples coming soon', instagram: 'Instagram profile', tiktok: 'TikTok profile' },
-    contact: { kicker: '06 / contact', title: 'Let’s make a great project', text: 'Open to conversations about work or internships, websites or apps, and UGC partnerships.', work: 'Work or internship', website: 'Website or app', collab: 'UGC partnership', email: 'Write an email', copy: 'Copy email', copied: 'Copied', copyFailed: 'Could not copy', phone: 'Phone', open: 'Open' },
+    contact: {
+      kicker: '06 / contact', title: 'Let’s make a great project', text: 'Open to conversations about work or internships, websites or apps, and UGC partnerships.',
+      work: 'Work or internship', website: 'Website or app', collab: 'UGC partnership',
+      workMessage: 'Hello! I would like to discuss a job or internship opportunity with you. Could we talk about the role, terms and next steps?',
+      websiteMessage: 'Hello! I would like to commission a website or app. Could we discuss the project requirements, timeline and cost?',
+      collabMessage: 'Hello! We would like to collaborate with you on UGC content for our brand. Could we discuss the content format, scope of work and collaboration terms?',
+      email: 'Write an email', copy: 'Copy email', copied: 'Copied', copyFailed: 'Could not copy', phone: 'Phone', open: 'Open',
+    },
     footer: { note: 'Student portfolio · 2026', top: 'Back to top' },
   },
 }
