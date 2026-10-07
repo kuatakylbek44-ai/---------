@@ -249,7 +249,7 @@ function Lanyard() {
   useEffect(() => () => badge.dispose(), [badge])
   return <group name="white-event-lanyard">
     {([-1, 1] as const).map(side => <Ribbon key={side} points={[
-      [side * .103, 2.765, -.025], [side * .144, 2.72, .1], [side * .15, 2.659, .168],
+      [side * .102, 2.788, -.042], [side * .119, 2.771, .072], [side * .152, 2.714, .139], [side * .145, 2.63, .191],
       [side * .127, 2.49, .215], [side * .081, 2.252, .217], [side * .035, 2.046, .205],
     ]} />)}
     <RoundedBox args={[.156, .207, .012]} radius={.01} smoothness={2} position={[0, 1.96, .21]} castShadow>

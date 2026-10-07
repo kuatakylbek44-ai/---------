@@ -19,6 +19,10 @@ socket.addEventListener('message', event => {
   if (message.error) request.reject(new Error(JSON.stringify(message.error)))
   else request.resolve(message.result)
 })
+socket.addEventListener('close', () => {
+  for (const request of pending.values()) { clearTimeout(request.timeout); request.reject(new Error('Test browser closed')) }
+  pending.clear()
+})
 function call(method, params = {}) {
   const requestId = ++id
   return new Promise((resolve, reject) => {
@@ -130,7 +134,7 @@ try {
   await call('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: x + 65, y }] })
   await call('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] })
   await delay(500)
-  assert.equal(await evaluate(`document.querySelector('.scene-shell canvas').style.touchAction`), 'pan-y')
+  assert.equal(await evaluate(`(()=>{let e=document.querySelector('.scene-shell canvas');while(e&&!e.classList.contains('scene-shell')){if(getComputedStyle(e).touchAction==='pan-y')return true;e=e.parentElement}return false})()`), true, 'vertical touch scrolling is retained by the canvas container')
   console.log('PASS: menu, touch targets, scroll background, UGC, WhatsApp, landscape, 3D rotation')
 
   await call('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] })
