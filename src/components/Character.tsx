@@ -271,7 +271,7 @@ function Watch() {
 
 function CrossedArm({ points, radii, name }: { points: Point[]; radii: number[]; name: string }) {
   const materials = useContext(Materials)
-  const geometry = useMemo(() => createArmGeometry(points, radii), [points, radii])
+  const geometry = useMemo(() => createArmGeometry(points, radii, radii[0] < .025 ? 14 : 48, radii[0] < .025 ? 10 : 24), [points, radii])
   useEffect(() => () => geometry.dispose(), [geometry])
   return <mesh name={name} geometry={geometry} material={materials?.skin} castShadow />
 }

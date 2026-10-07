@@ -102,10 +102,8 @@ export function createBodyGeometry(sections: BodySection[], facial = false, segm
   return geometry
 }
 
-export function createArmGeometry(points: [number, number, number][], radii: number[]) {
+export function createArmGeometry(points: [number, number, number][], radii: number[], segments = 48, sides = 24) {
   const curve = new CatmullRomCurve3(points.map(point => new Vector3(...point)))
-  const segments = 48
-  const sides = 24
   const frames = curve.computeFrenetFrames(segments, false)
   const positions: number[] = []
   const uv: number[] = []
