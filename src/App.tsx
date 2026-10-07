@@ -1,15 +1,16 @@
 import { Component, Suspense, lazy, useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
-import { ArrowUpRight, Check, Clipboard, Code2, ExternalLink, Layers3, Mail, Menu, Smartphone, Sparkles, X } from 'lucide-react'
+import { ArrowUpRight, Check, Clipboard, Code2, Layers3, Mail, Menu, Smartphone, Sparkles, X } from 'lucide-react'
 import './App.css'
 import './Motion.css'
+import './Workspace.css'
 import { SocialIcon } from './components/SocialIcon'
 import { ProfileSection } from './components/ProfileSection'
 import { usePortfolioMotion } from './hooks/usePortfolioMotion'
 import type { SocialPlatform } from './components/SocialIcon'
 import { profile } from './data/profile'
 import { projects } from './data/projects'
-import { ugcItems } from './data/ugc'
+import { UGCPortfolio } from './components/UGCPortfolio'
 import { translations } from './i18n/translations'
 import type { Language } from './i18n/translations'
 
@@ -92,7 +93,7 @@ function App() {
       <section id="skills" className="section skills-section"><div className="container"><div className="section-index">{t.skills.kicker}</div><div className="section-heading"><h2>{t.skills.title}</h2></div><div className="skills-grid">{Object.entries(skills).map(([key, items], index) => <div className="skill-group" key={key}><div className="skill-icon">{index === 0 ? <Code2 /> : index === 1 ? <Layers3 /> : index === 2 ? <Smartphone /> : index === 3 ? <Sparkles /> : <span>✦</span>}</div><h3>{t.skills[key as keyof typeof t.skills]}</h3><div className="skill-list">{items.map(item => <span key={item}>{item}</span>)}</div></div>)}</div></div></section>
       <section id="services" className="section container"><div className="section-index">{t.services.kicker}</div><div className="section-heading split"><h2>{t.services.title}</h2><p>{t.hero.text}</p></div><div className="services-grid"><ServiceCard number="01" icon={<Code2 />} title={t.services.webTitle} text={t.services.webText} /><ServiceCard number="02" icon={<Smartphone />} title={t.services.mobileTitle} text={t.services.mobileText} /><ServiceCard number="03" icon={<Sparkles />} title={t.services.ugcTitle} text={t.services.ugcText} /></div></section>
       <section id="projects" className="section projects-section"><div className="container"><div className="section-index">{t.projects.kicker}</div><div className="section-heading split"><h2>{t.projects.title}</h2><p>{t.projects.text}</p></div><div className="projects-grid">{projects.map((project, index) => <article className={`project-card ${project.accent}`} key={project.name}><div className="project-cover"><span>0{index + 1}</span><div className="cover-grid" /><strong>{project.name}</strong></div><div className="project-info"><h3>{project.name}</h3><p>{t.projects.empty}</p><span>{t.projects.link}</span></div></article>)}</div></div></section>
-      <section id="ugc" className="section ugc-section container"><div className="section-index">{t.ugc.kicker}</div><div className="ugc-layout"><div><h2>{t.ugc.title}</h2><p className="body-large">{t.ugc.text}</p></div><div className="ugc-empty"><div className="empty-icon"><Sparkles size={20} /></div><p>{ugcItems.length ? ugcItems[0].title : t.ugc.empty}</p><div className="ugc-links"><a href={profile.contacts.instagram} target="_blank" rel="noreferrer"><SocialIcon platform="instagram" size={17} />{t.ugc.instagram}<ExternalLink size={14} /></a><a href={profile.contacts.tiktok} target="_blank" rel="noreferrer"><SocialIcon platform="tiktok" size={17} />{t.ugc.tiktok}<ExternalLink size={14} /></a></div></div></div></section>
+      <section id="ugc" className="section ugc-section container"><div className="section-index">{t.ugc.kicker}</div><div className="ugc-layout"><div><h2>{t.ugc.title}</h2><p className="body-large">{t.ugc.text}</p></div><UGCPortfolio language={language} /></div></section>
       <section id="contact" className="section contact-section"><div className="container"><div className="section-index">{t.contact.kicker}</div><div className="contact-layout"><div><h2>{t.contact.title}</h2><p className="body-large">{t.contact.text}</p><div className="contact-main"><a className="email-link" href={`mailto:${profile.contacts.email}`}>{profile.contacts.email}<ArrowUpRight size={18} /></a><button className="copy-button" onClick={copyEmail}>{copied === 'copied' ? <Check size={15} /> : copied === 'failed' ? <X size={15} /> : <Clipboard size={15} />}{copied === 'copied' ? t.contact.copied : copied === 'failed' ? t.contact.copyFailed : t.contact.copy}</button></div></div><div className="contact-options"><ContactLink href={mail(t.contact.work)} icon={<Mail size={19} />} label={t.contact.work} /><ContactLink href={mail(t.contact.website)} icon={<Code2 />} label={t.contact.website} /><ContactLink href={mail(t.contact.collab)} icon={<Sparkles />} label={t.contact.collab} /></div></div><div className="contact-footer"><a href={`tel:${profile.contacts.phone.replaceAll(' ', '')}`}>{t.contact.phone}: <strong>{profile.contacts.phone}</strong></a><SocialLinks className="contact-socials" /></div></div></section>
     </main><footer className="site-footer container"><span>© {profile.brand}</span><span>{t.footer.note}</span><a href="#top">{t.footer.top} <ArrowUpRight size={14} /></a></footer>
   </div>
@@ -103,7 +104,7 @@ function SocialLinks({ className }: { className: string }) {
 
 function ScenePlaceholder({ label, loading = false }: { label: string; loading?: boolean }) {
   return <div className={`scene-shell ${loading ? 'scene-loading' : 'scene-placeholder'}`} role="img" aria-label={label} aria-busy={loading}>
-    <img className="scene-preview" src="/images/character-preview.png" alt="" width={800} height={1000} />
+    <img className="scene-preview" src="/images/workspace-preview.png" alt="" width={1200} height={1000} />
 
     <div className="scene-tag"><span /> {label}</div>
   </div>

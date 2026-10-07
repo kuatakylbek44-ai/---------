@@ -158,8 +158,8 @@ function Fan({ at, rgb, animated }: { at: Point; rgb: Texture; animated: boolean
     if (halo.current) halo.current.rotation.z += Math.min(delta, .05) * .22
   })
   return <group position={at}>
-    <mesh><cylinderGeometry args={[.214, .214, .025, 32]} /><meshStandardMaterial color="#080a10" /></mesh>
-    <group rotation={[Math.PI / 2, 0, 0]}>
+    <mesh rotation={[Math.PI / 2, 0, 0]}><cylinderGeometry args={[.214, .214, .025, 32]} /><meshStandardMaterial color="#080a10" /></mesh>
+    <group position={[0, 0, .017]}>
       <group ref={halo}><mesh><torusGeometry args={[.195, .018, 8, 48]} /><meshBasicMaterial map={rgb} toneMapped={false} /></mesh></group>
       <group ref={rotor}>{Array.from({ length: 7 }, (_, i) => <mesh key={i} rotation={[0, 0, i * Math.PI * 2 / 7]} position={[0, 0, -.009]}>
         <mesh position={[.098, 0, 0]} rotation={[0, 0, .65]}><boxGeometry args={[.15, .055, .008]} /><meshStandardMaterial color="#434853" metalness={.3} roughness={.5} /></mesh>

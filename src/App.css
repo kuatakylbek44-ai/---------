@@ -116,7 +116,28 @@ h2 { max-width:21ch; font-size:clamp(35px,4.5vw,58px); line-height:1.09; letter-
 .project-info { padding:20px; }
 .project-info h3 { margin:0 0 8px; font-size:19px; }
 .project-info span { display:block; margin-top:17px; color:var(--cyan); font-size:10px; line-height:1.6; }
-.ugc-layout { align-items:center; }
+.ugc-layout { align-items:start; }
+.ugc-portfolio { min-width:0; }
+.ugc-hint { margin:0 0 14px; color:var(--muted); font-size:13px; line-height:1.6; }
+.ugc-companies { display:grid; gap:10px; }
+.ugc-company { border:1px solid var(--line); border-radius:10px; background:rgba(17,26,51,.5); overflow:hidden; }
+.ugc-company summary { display:flex; align-items:center; justify-content:space-between; gap:16px; min-height:54px; padding:14px 18px; list-style:none; cursor:pointer; font:600 15px/1.5 'Space Grotesk',sans-serif; }
+.ugc-company summary::-webkit-details-marker { display:none; }
+.ugc-company-brand { display:flex; align-items:center; gap:12px; min-width:0; }
+.ugc-company-logo { position:relative; display:block; width:40px; height:40px; flex-shrink:0; overflow:hidden; border-radius:50%; border:1px solid rgba(255,255,255,.16); background:#151820; box-shadow:0 2px 8px rgba(0,0,0,.2); }
+.ugc-company-logo img { position:absolute; display:block; width:151.55%; max-width:none; height:auto; left:-25.78%; }
+.ugc-company summary svg { color:var(--cyan); flex-shrink:0; transition:transform .2s ease; }
+.ugc-company[open] { border-color:rgba(125,211,252,.35); }
+.ugc-company[open] summary svg { transform:rotate(180deg); }
+.ugc-company summary:hover { background:rgba(125,211,252,.05); }
+.ugc-company summary:focus-visible,.ugc-work-links a:focus-visible { outline:2px solid var(--cyan); outline-offset:-3px; }
+.ugc-company-content { display:grid; gap:16px; padding:16px 18px 18px; border-top:1px solid var(--line); }
+.ugc-platform-name { display:flex; align-items:center; gap:8px; margin-bottom:8px; color:var(--muted); font-size:12px; }
+.ugc-platform-name svg { color:var(--cyan); flex-shrink:0; }
+.ugc-work-links { display:flex; flex-wrap:wrap; gap:7px; }
+.ugc-work-links a { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:8px 12px; border:1px solid rgba(125,211,252,.18); border-radius:6px; color:var(--cyan); font-size:12px; line-height:1.4; background:rgba(125,211,252,.04); }
+.ugc-work-links a:hover { border-color:rgba(125,211,252,.5); background:rgba(125,211,252,.1); }
+@media (prefers-reduced-motion:reduce) { .ugc-company summary svg { transition:none; } }
 .ugc-empty { min-width:0; padding:32px; border:1px dashed rgba(125,211,252,.35); border-radius:8px; background:rgba(17,26,51,.5); }
 .empty-icon { display:grid; place-items:center; width:42px; height:42px; border-radius:50%; background:rgba(139,92,246,.18); color:var(--cyan); margin-bottom:22px; }
 .ugc-empty p { color:var(--text); font:500 20px/1.45 'Space Grotesk',sans-serif; max-width:300px; }
