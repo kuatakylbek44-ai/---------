@@ -66,20 +66,51 @@ export function usePortfolioMotion(rootRef: RefObject<HTMLDivElement | null>, re
     window.addEventListener('hashchange', showHashTarget)
 
     const progress = root.querySelector<HTMLElement>('.reading-progress')
+    const ambient = root.querySelector<HTMLElement>('.ambient-lights')
+    const compactScreen = window.matchMedia('(max-width: 900px)')
+    const ambientProperties = [
+      '--ambient-plane-y', '--ambient-orbit-x', '--ambient-orbit-y', '--ambient-orbit-angle',
+      '--ambient-violet-x', '--ambient-violet-y', '--ambient-cyan-x', '--ambient-cyan-y',
+    ]
     let progressFrame = 0
-    const updateProgress = () => {
+    let scrollDistance = Math.max(0, document.documentElement.scrollHeight - window.innerHeight)
+    let easedProgress = scrollDistance ? Math.min(1, Math.max(0, window.scrollY / scrollDistance)) : 0
+    let lastFrameTime = 0
+    const updateProgress = (time: number) => {
       progressFrame = 0
-      const distance = document.documentElement.scrollHeight - window.innerHeight
-      const value = distance > 0 ? Math.min(1, Math.max(0, window.scrollY / distance)) : 0
+      const value = scrollDistance > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollDistance)) : 0
       if (progress) progress.style.transform = `scaleX(${value})`
+      // Time-based easing stays consistent on both 60 Hz and 120 Hz phones.
+      const elapsed = lastFrameTime ? Math.min(64, time - lastFrameTime) : 16
+      lastFrameTime = time
+      easedProgress += (value - easedProgress) * (1 - Math.exp(-elapsed / 100))
+      if (Math.abs(value - easedProgress) < .0001) easedProgress = value
+      if (ambient) {
+        const amplitude = compactScreen.matches ? .45 : 1
+        const wave = Math.sin(easedProgress * Math.PI * 2)
+        ambient.style.setProperty('--ambient-plane-y', `${-easedProgress * 90 * amplitude}px`)
+        ambient.style.setProperty('--ambient-orbit-x', `${wave * 44 * amplitude}px`)
+        ambient.style.setProperty('--ambient-orbit-y', `${easedProgress * 100 * amplitude}px`)
+        ambient.style.setProperty('--ambient-orbit-angle', `${-28 + easedProgress * 26}deg`)
+        ambient.style.setProperty('--ambient-violet-x', `${wave * 92 * amplitude}px`)
+        ambient.style.setProperty('--ambient-violet-y', `${easedProgress * 220 * amplitude}px`)
+        ambient.style.setProperty('--ambient-cyan-x', `${-wave * 72 * amplitude}px`)
+        ambient.style.setProperty('--ambient-cyan-y', `${-easedProgress * 160 * amplitude}px`)
+      }
+      if (easedProgress !== value) progressFrame = window.requestAnimationFrame(updateProgress)
+      else lastFrameTime = 0
     }
     const scheduleProgress = () => {
       if (!progressFrame) progressFrame = window.requestAnimationFrame(updateProgress)
     }
-    updateProgress()
+    const measureScroll = () => {
+      scrollDistance = Math.max(0, document.documentElement.scrollHeight - window.innerHeight)
+      scheduleProgress()
+    }
+    updateProgress(performance.now())
     window.addEventListener('scroll', scheduleProgress, { passive: true })
-    window.addEventListener('resize', scheduleProgress)
-    const resizeObserver = typeof ResizeObserver === 'undefined' ? undefined : new ResizeObserver(scheduleProgress)
+    window.addEventListener('resize', measureScroll)
+    const resizeObserver = typeof ResizeObserver === 'undefined' ? undefined : new ResizeObserver(measureScroll)
     resizeObserver?.observe(root)
 
     const cards = Array.from(root.querySelectorAll<HTMLElement>('.skill-group, .service-card, .project-card'))
@@ -121,7 +152,7 @@ export function usePortfolioMotion(rootRef: RefObject<HTMLDivElement | null>, re
       root.removeEventListener('focusin', showFocused)
       window.removeEventListener('hashchange', showHashTarget)
       window.removeEventListener('scroll', scheduleProgress)
-      window.removeEventListener('resize', scheduleProgress)
+      window.removeEventListener('resize', measureScroll)
       root.removeEventListener('pointermove', followPointer)
       root.removeEventListener('pointerleave', clearPointer)
       elements.forEach(element => {
@@ -136,6 +167,7 @@ export function usePortfolioMotion(rootRef: RefObject<HTMLDivElement | null>, re
         card.style.removeProperty('--spotlight-y')
       })
       progress?.style.removeProperty('transform')
+      ambientProperties.forEach(property => ambient?.style.removeProperty(property))
     }
   }, [rootRef, reducedMotion])
 }

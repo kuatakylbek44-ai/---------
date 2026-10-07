@@ -1,29 +1,79 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { createContext, useContext, useEffect, useMemo, useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import type { ThreeElements } from '@react-three/fiber'
 import { RoundedBox, useTexture } from '@react-three/drei'
-import { BufferGeometry, CanvasTexture, CatmullRomCurve3, DoubleSide, Float32BufferAttribute, Quaternion, SRGBColorSpace, TubeGeometry, Vector3 } from 'three'
+import { BufferGeometry, CanvasTexture, CatmullRomCurve3, DoubleSide, Float32BufferAttribute, MeshPhysicalMaterial, MeshStandardMaterial, Quaternion, RepeatWrapping, SRGBColorSpace, TubeGeometry, Vector3 } from 'three'
 import type { Group, Texture } from 'three'
-import { createArmGeometry, createBodyGeometry, createHairGeometry } from './characterGeometry'
+import { createArmGeometry, createBodyGeometry, createHairGeometry, facialDisplacement } from './characterGeometry'
 import type { BodySection } from './characterGeometry'
 
 type Point = [number, number, number]
-const skin = '#c99b7c'
-const shirt = '#121418'
-const trousers = '#18191c'
+const skin = '#c4a087'
+const shirt = '#141619'
+const trousers = '#1b1d21'
 
-function Surface({ sections, color, facial = false, map, ...props }: ThreeElements['mesh'] & {
-  sections: BodySection[]; color: string; facial?: boolean; map?: Texture
+function surfaceTexture(kind: 'skin' | 'fabric') {
+  const canvas = document.createElement('canvas')
+  canvas.width = canvas.height = 128
+  const context = canvas.getContext('2d')!
+  const data = context.createImageData(128, 128)
+  for (let y = 0; y < 128; y++) for (let x = 0; x < 128; x++) {
+    const random = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453
+    const noise = random - Math.floor(random)
+    const grain = kind === 'fabric'
+      ? 126 + Math.sin(x * Math.PI) * 11 + (x % 3 === 0 ? 9 : -4) + (y % 3 === 0 ? 8 : -4) + noise * 15
+      : 134 + (noise - .5) * 32
+    const offset = (y * 128 + x) * 4
+    data.data[offset] = data.data[offset + 1] = data.data[offset + 2] = grain
+    data.data[offset + 3] = 255
+  }
+  context.putImageData(data, 0, 0)
+  const texture = new CanvasTexture(canvas)
+  texture.wrapS = texture.wrapT = RepeatWrapping
+  texture.repeat.set(kind === 'skin' ? 7 : 4, kind === 'skin' ? 7 : 6)
+  return texture
+}
+
+function useMaterials() {
+  const source = useTexture('/textures/character-head-albedo.png')
+  const materials = useMemo(() => {
+    const pores = surfaceTexture('skin')
+    const weave = surfaceTexture('fabric')
+    const skinMap = source.clone()
+    skinMap.colorSpace = SRGBColorSpace
+    skinMap.offset.set(.34, .015)
+    skinMap.repeat.set(.32, .145)
+    skinMap.needsUpdate = true
+    const skinMaterial = new MeshPhysicalMaterial({ color: '#fff4e9', map: skinMap, roughness: .69, bumpMap: pores, bumpScale: .0012, specularIntensity: .3, clearcoat: .025, clearcoatRoughness: .65 })
+    const shirtMaterial = new MeshStandardMaterial({ color: shirt, roughness: .94, bumpMap: weave, bumpScale: .0016 })
+    const trouserMaterial = new MeshStandardMaterial({ color: trousers, roughness: .9, bumpMap: weave, bumpScale: .0017 })
+    const shoeMaterial = new MeshStandardMaterial({ color: '#16191c', roughness: .48, bumpMap: weave, bumpScale: .0005 })
+    return { pores, weave, skinMap, skin: skinMaterial, shirt: shirtMaterial, trousers: trouserMaterial, shoe: shoeMaterial }
+  }, [source])
+  useEffect(() => () => {
+    materials.pores.dispose(); materials.weave.dispose(); materials.skinMap.dispose()
+    materials.skin.dispose(); materials.shirt.dispose(); materials.trousers.dispose(); materials.shoe.dispose()
+  }, [materials])
+  return materials
+}
+const Materials = createContext<ReturnType<typeof useMaterials> | null>(null)
+
+function Surface({ sections, color, facial = false, map, fabric, material: suppliedMaterial, ...props }: ThreeElements['mesh'] & {
+  sections: BodySection[]; color: string; facial?: boolean; map?: Texture; fabric?: 'shirt' | 'trousers'
 }) {
-  const geometry = useMemo(() => createBodyGeometry(sections, facial), [sections, facial])
+  const materials = useContext(Materials)
+  const geometry = useMemo(() => createBodyGeometry(sections, facial, facial ? 80 : 32, fabric), [sections, facial, fabric])
   useEffect(() => () => geometry.dispose(), [geometry])
-  return <mesh geometry={geometry} castShadow receiveShadow={!facial} {...props}>
-    <meshStandardMaterial color={color} map={map} roughness={facial ? .82 : .88} />
+  const material = suppliedMaterial ?? (fabric ? materials?.[fabric] : color === skin ? materials?.skin : undefined)
+  return <mesh geometry={geometry} material={material} castShadow receiveShadow={!facial && color !== skin} {...props}>
+    {!material && (facial
+      ? <meshPhysicalMaterial color={color} map={map} roughness={.67} bumpMap={materials?.pores} bumpScale={.0012} specularIntensity={.35} clearcoat={.035} clearcoatRoughness={.55} />
+      : <meshStandardMaterial color={color} map={map} roughness={.86} />)}
   </mesh>
 }
 
-function Limb({ name, from, to, radii, color, depth = 1 }: {
-  name: string; from: Point; to: Point; radii: number[]; color: string; depth?: number
+function Limb({ name, from, to, radii, color, depth = 1, fabric }: {
+  name: string; from: Point; to: Point; radii: number[]; color: string; depth?: number; fabric?: 'shirt' | 'trousers'
 }) {
   const start = new Vector3(...from)
   const direction = new Vector3(...to).sub(start)
@@ -31,35 +81,78 @@ function Limb({ name, from, to, radii, color, depth = 1 }: {
   const sections: BodySection[] = radii.map((radius, index) => [
     direction.length() * index / (radii.length - 1), radius, radius * depth, radius * depth,
   ])
-  return <Surface name={name} position={start} quaternion={rotation} sections={sections} color={color} />
+  return <Surface name={name} position={start} quaternion={rotation} sections={sections} color={color} fabric={fabric} />
 }
 
 function Curve({ points, radius, color, ...props }: ThreeElements['mesh'] & { points: Point[]; radius: number; color: string }) {
+  const materials = useContext(Materials)
   const geometry = useMemo(() => new TubeGeometry(new CatmullRomCurve3(points.map(point => new Vector3(...point))), 24, radius, 7, false), [points, radius])
   useEffect(() => () => geometry.dispose(), [geometry])
-  return <mesh {...props} geometry={geometry}>
-    <meshStandardMaterial color={color} roughness={.85} />
+  const material = color === skin ? materials?.skin : undefined
+  return <mesh {...props} geometry={geometry} material={material}>
+    {!material && <meshStandardMaterial color={color} roughness={.85} />}
   </mesh>
 }
 
 const torso: BodySection[] = [
-  [1.65, .285, .157, .146], [1.73, .3, .173, .159],
-  [1.94, .3, .182, .171], [2.18, .322, .187, .167],
-  [2.43, .357, .192, .16], [2.61, .399, .174, .155],
-  [2.69, .407, .149, .146], [2.735, .31, .12, .123], [2.79, .127, .101, .104],
+  [1.65, .302, .167, .158], [1.73, .309, .173, .163],
+  [1.94, .301, .182, .169], [2.18, .319, .187, .171],
+  [2.43, .357, .199, .168], [2.59, .389, .187, .166],
+  [2.65, .397, .164, .152], [2.705, .347, .139, .137], [2.765, .146, .102, .108],
 ]
 const hips: BodySection[] = [
-  [1.425, .025, .09, .09], [1.54, .225, .163, .166], [1.65, .309, .179, .183], [1.77, .286, .163, .164],
+  [1.48, .073, .046, .06], [1.56, .246, .137, .142], [1.65, .302, .152, .156], [1.74, .296, .161, .162],
 ]
 const head: BodySection[] = [
   [-.28, .016, .036, .037, .021], [-.252, .079, .117, .079, .013],
-  [-.202, .143, .16, .108], [-.139, .186, .179, .15],
-  [-.063, .218, .194, .181], [.018, .223, .195, .201],
-  [.108, .22, .185, .206], [.192, .205, .16, .189],
-  [.252, .15, .104, .136], [.29, .006, .006, .006],
+  [-.202, .138, .156, .112], [-.139, .181, .176, .15],
+  [-.063, .211, .189, .181], [.018, .217, .19, .199],
+  [.108, .213, .183, .201], [.192, .193, .154, .182],
+  [.252, .132, .093, .121], [.283, .006, .006, .006],
 ]
 
+function EyeSurface({ side, map }: { side: -1 | 1; map: Texture }) {
+  // The reference eyes retain their texture; a small convex corneal surface supplies depth and light.
+  const geometry = useMemo(() => {
+    const positions: number[] = []
+    const uv: number[] = []
+    const indices: number[] = []
+    const centerX = side === -1 ? -.12 : .104
+    const centerY = side === -1 ? -.001 : .004
+    const segments = 32
+    const rings = 5
+    for (let ring = 0; ring <= rings; ring++) {
+      const radius = ring / rings
+      for (let point = 0; point <= segments; point++) {
+        const angle = point / segments * Math.PI * 2
+        const x = centerX + Math.cos(angle) * .043 * radius
+        const y = centerY + Math.sin(angle) * .012 * radius
+        const cosine = Math.sqrt(Math.max(0, 1 - (x / .217) ** 2))
+        const z = cosine * .19 + facialDisplacement(x, y) * cosine ** 3 + .0015 + .004 * (1 - radius ** 2)
+        positions.push(x, y, z)
+        uv.push(.5 + Math.asin(x / .217) / (Math.PI * 2), (y + .28) / .563)
+        if (ring < rings && point < segments) {
+          const a = ring * (segments + 1) + point
+          const b = a + segments + 1
+          indices.push(a, b, a + 1, b, b + 1, a + 1)
+        }
+      }
+    }
+    const result = new BufferGeometry()
+    result.setAttribute('position', new Float32BufferAttribute(positions, 3))
+    result.setAttribute('uv', new Float32BufferAttribute(uv, 2))
+    result.setIndex(indices)
+    result.computeVertexNormals()
+    return result
+  }, [side])
+  useEffect(() => () => geometry.dispose(), [geometry])
+  return <mesh name={`reference-cornea-${side}`} geometry={geometry}>
+    <meshPhysicalMaterial map={map} roughness={.3} specularIntensity={.45} clearcoat={.45} clearcoatRoughness={.25} />
+  </mesh>
+}
+
 function Head({ reducedMotion }: { reducedMotion: boolean }) {
+  const materials = useContext(Materials)
   const headRig = useRef<Group>(null)
   const elapsed = useRef(0)
   const { invalidate } = useThree()
@@ -68,7 +161,7 @@ function Head({ reducedMotion }: { reducedMotion: boolean }) {
     if (!headRig.current) return
     elapsed.current = Math.min(3.6, elapsed.current + Math.min(delta, .05))
     const t = reducedMotion ? 1 : elapsed.current / 3.6
-    headRig.current.rotation.set(.015 + Math.sin(t * Math.PI * 2) * .018, -.025 - Math.sin(t * Math.PI) * .065, -.015)
+    headRig.current.rotation.set(.009 + Math.sin(t * Math.PI * 2) * .012, -.025 - Math.sin(t * Math.PI) * .045, -.01)
     if (!reducedMotion && t < 1) invalidate()
   })
   const source = useTexture('/textures/character-head-albedo.png')
@@ -92,29 +185,22 @@ function Head({ reducedMotion }: { reducedMotion: boolean }) {
   const hair = useMemo(() => createHairGeometry(), [])
   useEffect(() => () => { face.dispose(); hairMap.dispose(); hair.dispose() }, [face, hairMap, hair])
 
-  return <group ref={headRig} name="reference-based-head" position={[0, 3.145, -.012]} rotation={[.015, -.025, -.015]}>
+  return <group ref={headRig} name="reference-based-head" position={[0, 3.04, -.012]} scale={.86} rotation={[.009, -.025, -.01]}>
     <Surface name="photo-textured-anatomical-face" sections={head} color="#ffffff" facial map={face} />
+    <EyeSurface side={-1} map={face} /><EyeSurface side={1} map={face} />
     {([-1, 1] as const).map(side => <group key={side}>
-      <mesh name={`ear-${side}`} position={[side * .224, -.058, -.008]} rotation={[0, side * -.17, side * -.06]} scale={[.036, .064, .031]} castShadow>
-        <sphereGeometry args={[1, 24, 16]} /><meshStandardMaterial color={skin} roughness={.84} />
+      <mesh name={`ear-${side}`} position={[side * .218, -.061, -.073]} rotation={[0, side * -.2, side * -.09]} scale={[.025, .058, .032]} material={materials?.skin} castShadow>
+        <sphereGeometry args={[1, 24, 16]} />
       </mesh>
-      <mesh position={[side * .246, -.058, .011]} scale={[.009, .039, .009]}>
-        <sphereGeometry args={[1, 16, 12]} /><meshStandardMaterial color="#b28165" roughness={.95} />
+      <mesh name={`concha-${side}`} position={[side * .231, -.058, -.05]} scale={[.008, .031, .006]}>
+        <sphereGeometry args={[1, 16, 12]} /><meshStandardMaterial color="#b68a75" roughness={.77} />
       </mesh>
+      <Curve name={`ear-helix-${side}`} points={[[side * .222, -.111, -.056], [side * .24, -.085, -.04], [side * .242, -.044, -.041], [side * .23, -.014, -.055], [side * .217, -.026, -.042]]} radius={.0035} color={skin} />
+      <Curve name={`ear-antihelix-${side}`} points={[[side * .233, -.087, -.042], [side * .227, -.067, -.037], [side * .233, -.04, -.042]]} radius={.003} color={skin} />
     </group>)}
     <mesh name="side-swept-brown-hair" geometry={hair} castShadow>
-      <meshStandardMaterial map={hairMap} color="#c6b3a4" roughness={.72} />
+      <meshStandardMaterial map={hairMap} color="#ddd0c2" roughness={.86} bumpMap={hairMap} bumpScale={.0018} />
     </mesh>
-    {Array.from({ length: 18 }, (_, index) => {
-      const x = (index - 8.5) * .019
-      const edge = Math.abs(x) / .23
-      return <Curve key={index} name={`fine-hair-lock-${index}`} points={[
-        [x + .009, .185 - edge * .02, .185 - edge * .015],
-        [x * .8 - .01, .263 - edge * .055, .13],
-        [x * .5 - .025, .332 - edge * .065, .007],
-        [x * .6 - .025, .267 - edge * .03, -.118],
-      ]} radius={.0012} color={index % 3 === 0 ? '#655040' : '#443427'} />
-    })}
   </group>
 }
 
@@ -124,7 +210,9 @@ function Ribbon({ points }: { points: Point[] }) {
     const positions: number[] = []
     const indices: number[] = []
     curve.getPoints(32).forEach((point, index) => {
-      positions.push(point.x - .018, point.y, point.z, point.x + .018, point.y, point.z)
+      const tangent = curve.getTangent(index / 32)
+      const sideways = new Vector3(-tangent.y, tangent.x, 0).normalize().multiplyScalar(.014)
+      positions.push(point.x - sideways.x, point.y - sideways.y, point.z, point.x + sideways.x, point.y + sideways.y, point.z)
       if (index < 32) indices.push(index * 2, index * 2 + 2, index * 2 + 1, index * 2 + 1, index * 2 + 2, index * 2 + 3)
     })
     const result = new BufferGeometry()
@@ -161,8 +249,8 @@ function Lanyard() {
   useEffect(() => () => badge.dispose(), [badge])
   return <group name="white-event-lanyard">
     {([-1, 1] as const).map(side => <Ribbon key={side} points={[
-      [side * .116, 2.792, -.025], [side * .161, 2.709, .137],
-      [side * .127, 2.49, .211], [side * .084, 2.252, .217], [side * .039, 2.046, .198],
+      [side * .103, 2.765, -.025], [side * .144, 2.72, .1], [side * .15, 2.659, .168],
+      [side * .127, 2.49, .215], [side * .081, 2.252, .217], [side * .035, 2.046, .205],
     ]} />)}
     <RoundedBox args={[.156, .207, .012]} radius={.01} smoothness={2} position={[0, 1.96, .21]} castShadow>
       <meshStandardMaterial color="#ddd6c9" roughness={.85} />
@@ -172,7 +260,7 @@ function Lanyard() {
 }
 
 function Watch() {
-  return <group name="cream-strap-watch" position={[.257, 2.318, .396]} rotation={[.09, -.07, -.15]}>
+  return <group name="cream-strap-watch" position={[.257, 2.326, .401]} scale={.8} rotation={[.09, -.07, -.15]}>
     <RoundedBox args={[.086, .047, .115]} radius={.014} smoothness={2}><meshStandardMaterial color="#c5c0ae" roughness={.8} /></RoundedBox>
     <mesh position={[0, 0, .064]} rotation={[Math.PI / 2, 0, 0]}><cylinderGeometry args={[.043, .043, .013, 32]} /><meshStandardMaterial color="#d4d1c7" roughness={.24} metalness={.78} /></mesh>
     <mesh position={[0, 0, .072]} rotation={[Math.PI / 2, 0, 0]}><cylinderGeometry args={[.034, .034, .005, 32]} /><meshStandardMaterial color="#101516" roughness={.3} metalness={.2} /></mesh>
@@ -182,42 +270,44 @@ function Watch() {
 }
 
 function CrossedArm({ points, radii, name }: { points: Point[]; radii: number[]; name: string }) {
+  const materials = useContext(Materials)
   const geometry = useMemo(() => createArmGeometry(points, radii), [points, radii])
   useEffect(() => () => geometry.dispose(), [geometry])
-  return <mesh name={name} geometry={geometry} castShadow receiveShadow><meshStandardMaterial color={skin} roughness={.85} /></mesh>
+  return <mesh name={name} geometry={geometry} material={materials?.skin} castShadow />
 }
 
 export function Character({ reducedMotion = false, ...props }: ThreeElements['group'] & { reducedMotion?: boolean }) {
-  return <group name="photo-inspired-standing-character" {...props}>
-    <Surface name="tailored-trouser-waist" sections={hips} color={trousers} />
+  const materials = useMaterials()
+  return <Materials.Provider value={materials}><group name="photo-inspired-standing-character" {...props}>
+    <Surface name="tailored-trouser-waist" sections={hips} color={trousers} fabric="trousers" />
     {([-1, 1] as const).map(side => <group key={`leg-${side}`}>
-      <Limb name={`trouser-leg-${side}`} from={[side * .178, 1.66, .015]} to={[side * .218, .215, .014]} radii={[.153, .174, .152, .134, .139]} depth={.91} color={trousers} />
+      <Limb name={`trouser-leg-${side}`} from={[side * .177, 1.665, .012]} to={[side * .218, .203, .014]} radii={[.164, .17, .153, .133, .135, .13, .12]} depth={.91} color={trousers} fabric="trousers" />
       <Curve points={[[side * .319, 1.4, .042], [side * .327, .91, .018], [side * .347, .28, .016]]} radius={.0023} color="#292a2d" />
       <group position={[side * .218, 0, .06]} rotation={[0, side * -.11, 0]}>
         <Surface name={`cream-sneaker-sole-${side}`} color="#c6bea8" sections={[[.009, .106, .244, .111, .04], [.032, .126, .253, .132, .04], [.063, .12, .242, .126, .04]]} />
-        <Surface name={`black-leather-sneaker-${side}`} color="#191b1d" sections={[[.057, .119, .235, .119, .038], [.105, .116, .212, .117, .031], [.157, .091, .154, .104, .009], [.204, .072, .075, .074, -.012]]} />
+        <Surface name={`black-leather-sneaker-${side}`} color="#191b1d" material={materials.shoe} sections={[[.057, .119, .235, .119, .038], [.105, .116, .212, .117, .031], [.157, .091, .154, .104, .009], [.204, .072, .075, .074, -.012]]} />
         {[0, 1, 2, 3].map(lace => <Curve key={lace} points={[
           [-.067, .164 - lace * .012, .049 + lace * .032], [0, .177 - lace * .012, .052 + lace * .032], [.067, .164 - lace * .012, .049 + lace * .032],
         ]} radius={.004} color="#343436" />)}
       </group>
     </group>)}
-    <Surface name="fitted-black-t-shirt" sections={torso} color={shirt} />
-    <mesh name="neck" position={[0, 2.815, -.029]} castShadow><cylinderGeometry args={[.097, .122, .235, 32]} /><meshStandardMaterial color={skin} roughness={.85} /></mesh>
-    <mesh name="crew-neck-collar" position={[0, 2.783, -.001]} rotation={[Math.PI / 2, 0, 0]} scale={[1, .82, 1]}><torusGeometry args={[.125, .011, 12, 40]} /><meshStandardMaterial color="#26282c" roughness={.96} /></mesh>
+    <Surface name="fitted-black-t-shirt" sections={torso} color={shirt} fabric="shirt" />
+    <Surface name="anatomical-neck" color={skin} sections={[[2.698, .135, .103, .108, -.035], [2.755, .113, .094, .105, -.034], [2.82, .093, .087, .096, -.027], [2.902, .089, .087, .093, -.022]]} />
+    <mesh name="crew-neck-collar" position={[0, 2.763, -.006]} rotation={[Math.PI / 2, 0, 0]} scale={[1, .82, 1]}><torusGeometry args={[.13, .009, 12, 40]} /><meshStandardMaterial color="#25272a" roughness={.96} /></mesh>
     <Curve name="shirt-bottom-hem" points={[[-.27, 1.686, .105], [-.15, 1.673, .155], [0, 1.67, .171], [.15, 1.673, .155], [.27, 1.686, .105]]} radius={.004} color="#242529" />
     <Lanyard />
     {([-1, 1] as const).map(side => <group key={`arm-${side}`}>
-      <Limb name={`short-sleeve-${side}`} from={[side * .367, 2.655, -.005]} to={[side * .43, 2.355, .087]} radii={[.137, .143, .132, .119]} color={shirt} />
+      <Limb name={`short-sleeve-${side}`} from={[side * .313, 2.683, -.005]} to={[side * .425, 2.34, .083]} radii={[.031, .11, .145, .135, .123]} depth={.95} color={shirt} fabric="shirt" />
     </group>)}
-    <CrossedArm name="continuous-crossed-left-arm" points={[[-.39, 2.58, .01], [-.43, 2.35, .086], [-.459, 2.13, .16], [-.405, 2.129, .229], [-.12, 2.245, .372], [.304, 2.341, .361]]} radii={[.103, .097, .08, .093, .074, .052]} />
-    <CrossedArm name="continuous-crossed-right-arm" points={[[.39, 2.58, .01], [.43, 2.35, .086], [.459, 2.13, .16], [.4, 2.105, .238], [.09, 2.15, .386], [-.312, 2.182, .374]]} radii={[.103, .097, .08, .093, .074, .054]} />
-    <mesh name="left-hand-on-upper-arm" position={[.352, 2.379, .289]} rotation={[.2, -.35, -.65]} scale={[.065, .034, .091]} castShadow><sphereGeometry args={[1, 28, 16]} /><meshStandardMaterial color={skin} roughness={.85} /></mesh>
-    <mesh name="right-hand-tucked-under-arm" position={[-.368, 2.22, .302]} rotation={[.1, .3, .7]} scale={[.064, .034, .087]} castShadow><sphereGeometry args={[1, 24, 16]} /><meshStandardMaterial color={skin} roughness={.85} /></mesh>
-    {[0, 1, 2, 3].map(finger => <Curve key={finger} name={`resting-left-finger-${finger}`} points={[
-      [.316 + finger * .019, 2.396 + finger * .009, .306], [.341 + finger * .017, 2.442 + finger * .005, .253], [.356 + finger * .015, 2.456, .219],
-    ]} radius={.011} color={skin} castShadow />)}
-    <Curve name="resting-left-thumb" points={[[.3, 2.377, .325], [.289, 2.41, .274], [.301, 2.433, .254]]} radius={.016} color={skin} />
+    <CrossedArm name="continuous-crossed-left-arm" points={[[-.373, 2.55, .006], [-.429, 2.345, .085], [-.45, 2.13, .172], [-.386, 2.125, .241], [-.117, 2.254, .377], [.306, 2.344, .357]]} radii={[.055, .103, .081, .09, .077, .051]} />
+    <CrossedArm name="continuous-crossed-right-arm" points={[[.373, 2.55, .006], [.429, 2.345, .085], [.451, 2.132, .172], [.391, 2.104, .247], [.086, 2.163, .389], [-.315, 2.19, .371]]} radii={[.055, .103, .082, .09, .078, .052]} />
+    <Surface name="left-hand-on-upper-arm" position={[.349, 2.384, .282]} rotation={[.19, -.3, -.65]} color={skin} sections={[[-.061, .022, .018, .016], [-.045, .048, .023, .018], [.001, .054, .026, .017], [.052, .045, .021, .015], [.068, .026, .013, .012]]} />
+    <Surface name="right-hand-tucked-under-arm" position={[-.353, 2.19, .25]} rotation={[.1, .3, .7]} color={skin} sections={[[-.066, .019, .013, .011], [-.037, .041, .026, .02], [.023, .046, .023, .018], [.061, .024, .013, .009]]} />
+    {[0, 1, 2, 3].map(finger => <CrossedArm key={finger} name={`resting-left-finger-${finger}`} points={[
+      [.312 + finger * .021, 2.395 + finger * .008, .304], [.336 + finger * .018, 2.434 + finger * .005, .264], [.355 + finger * .015, 2.45 - Math.abs(finger - 1) * .008, .23],
+    ]} radii={[.0105, .01, .0045]} />)}
+    <CrossedArm name="resting-left-thumb" points={[[.301, 2.366, .321], [.284, 2.407, .282], [.302, 2.426, .265]]} radii={[.015, .011, .005]} />
     <Watch />
     <Head reducedMotion={reducedMotion} />
-  </group>
+  </group></Materials.Provider>
 }

@@ -1,7 +1,15 @@
-/* Motion enhances the existing layout without changing the portrait or scene. */
+/* Atmospheric depth stays behind the content and follows the reader's scroll. */
 .site-shell {
   --motion-ease: cubic-bezier(.22, 1, .36, 1);
   isolation: isolate;
+}
+
+.site-shell::before {
+  z-index: 0;
+  opacity: .34;
+  background-size: 88px 88px;
+  -webkit-mask-image: radial-gradient(ellipse at 65% 26%, #000, transparent 72%);
+  mask-image: radial-gradient(ellipse at 65% 26%, #000, transparent 72%);
 }
 
 .site-shell > main,
@@ -16,28 +24,62 @@
   inset: 0;
   overflow: hidden;
   pointer-events: none;
+  contain: strict;
+}
+
+.ambient-lights::before,
+.ambient-lights::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+
+.ambient-lights::before {
+  inset: -18%;
+  background:
+    radial-gradient(circle at 64% 18%, rgba(197, 225, 255, .38) 0 1px, transparent 2px),
+    radial-gradient(circle at 21% 37%, rgba(197, 225, 255, .24) 0 1px, transparent 2px),
+    radial-gradient(circle at 80% 65%, rgba(197, 225, 255, .27) 0 1px, transparent 2px),
+    radial-gradient(circle at 37% 82%, rgba(197, 225, 255, .24) 0 1px, transparent 2px),
+    radial-gradient(ellipse at 75% 28%, rgba(89, 85, 191, .17), transparent 44%),
+    radial-gradient(ellipse at 20% 64%, rgba(31, 126, 157, .1), transparent 42%);
+  transform: translate3d(0, var(--ambient-plane-y, 0px), 0);
+  animation: ambient-breathe 16s ease-in-out infinite alternate;
+}
+
+.ambient-lights::after {
+  top: 13%;
+  left: 24%;
+  width: min(92vw, 1380px);
+  height: min(42vw, 590px);
+  border: 1px solid rgba(175, 192, 236, .055);
+  border-radius: 50%;
+  box-shadow: 0 0 0 60px rgba(151, 183, 229, .018), inset 0 0 0 60px rgba(151, 183, 229, .018);
+  transform: translate3d(var(--ambient-orbit-x, 0px), var(--ambient-orbit-y, 0px), 0) rotate(var(--ambient-orbit-angle, -28deg));
 }
 
 .ambient-lights > span {
   position: absolute;
   display: block;
-  width: min(58vw, 740px);
+  width: min(72vw, 1020px);
   aspect-ratio: 1;
   border-radius: 50%;
-  opacity: .7;
+  opacity: .85;
   animation: ambient-arrive 4.6s var(--motion-ease) both;
 }
 
 .ambient-orb--violet {
-  top: -26%;
-  right: -15%;
-  background: radial-gradient(circle, rgba(139, 92, 246, .17), rgba(139, 92, 246, .06) 36%, transparent 68%);
+  top: -30%;
+  right: -20%;
+  background: radial-gradient(circle, rgba(139, 92, 246, .24), rgba(116, 87, 203, .1) 36%, transparent 69%);
+  transform: translate3d(var(--ambient-violet-x, 0px), var(--ambient-violet-y, 0px), 0);
 }
 
 .ambient-orb--cyan {
-  bottom: -37%;
-  left: -22%;
-  background: radial-gradient(circle, rgba(125, 211, 252, .1), rgba(125, 211, 252, .025) 40%, transparent 68%);
+  bottom: -42%;
+  left: -28%;
+  background: radial-gradient(circle, rgba(91, 188, 219, .16), rgba(54, 137, 171, .055) 40%, transparent 69%);
+  transform: translate3d(var(--ambient-cyan-x, 0px), var(--ambient-cyan-y, 0px), 0);
   animation-delay: 140ms !important;
 }
 
@@ -310,17 +352,34 @@
   }
 
   .ambient-lights > span {
-    width: 86vw;
-    opacity: .5;
+    width: min(108vw, 720px);
+    opacity: .68;
+  }
+
+  .ambient-lights::before {
+    inset: -10%;
+  }
+
+  .ambient-lights::after {
+    top: 28%;
+    left: 12%;
+    width: 112vw;
+    height: 64vw;
+    box-shadow: 0 0 0 36px rgba(151, 183, 229, .015);
+  }
+
+  .site-shell::before {
+    background-size: 64px 64px;
+    opacity: .22;
   }
 
   .ambient-orb--violet {
-    top: -9%;
+    top: -8%;
     right: -40%;
   }
 
   .ambient-orb--cyan {
-    bottom: -8%;
+    bottom: -16%;
     left: -46%;
   }
 
@@ -340,8 +399,12 @@
 }
 
 @keyframes ambient-arrive {
-  from { opacity: .25; transform: translate3d(24px, 28px, 0) scale(.93); }
-  to { transform: translate3d(0, 0, 0) scale(1); }
+  from { opacity: .25; }
+}
+
+@keyframes ambient-breathe {
+  from { opacity: .66; }
+  to { opacity: 1; }
 }
 
 @keyframes header-arrive {
@@ -371,6 +434,8 @@
   .site-header,
   .nav,
   .brand-mark,
+  .ambient-lights::before,
+  .ambient-lights::after,
   .ambient-lights > span,
   .button,
   .button::before,

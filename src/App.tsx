@@ -7,6 +7,7 @@ import './Workspace.css'
 import { SocialIcon } from './components/SocialIcon'
 import { ProfileSection } from './components/ProfileSection'
 import { usePortfolioMotion } from './hooks/usePortfolioMotion'
+import { listenToMediaQuery } from './utils/mediaQuery'
 import type { SocialPlatform } from './components/SocialIcon'
 import { profile } from './data/profile'
 import { projects } from './data/projects'
@@ -27,7 +28,8 @@ const skills = { web: ['HTML/CSS', 'JavaScript'], code: ['Python', 'C++'], mobil
 
 function App() {
   const [language, setLanguage] = useState<Language>(() => {
-    const saved = localStorage.getItem('portfolio-language')
+    let saved: string | null = null
+    try { saved = localStorage.getItem('portfolio-language') } catch { /* Storage can be unavailable in embedded browsers. */ }
     return saved === 'ru' || saved === 'en' ? saved : 'kk'
   })
   const [menuOpen, setMenuOpen] = useState(false)
@@ -35,11 +37,11 @@ function App() {
   const navigationRef = useRef<HTMLElement>(null)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
   const [copied, setCopied] = useState<'copied' | 'failed' | null>(null)
-  const [reducedMotion, setReducedMotion] = useState(false)
+  const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   usePortfolioMotion(siteRef, reducedMotion)
   const t = translations[language]
-  useEffect(() => { localStorage.setItem('portfolio-language', language); document.documentElement.lang = language }, [language])
-  useEffect(() => { const media = window.matchMedia('(prefers-reduced-motion: reduce)'); const update = () => setReducedMotion(media.matches); update(); media.addEventListener('change', update); return () => media.removeEventListener('change', update) }, [])
+  useEffect(() => { try { localStorage.setItem('portfolio-language', language) } catch { /* Language switching still works without storage. */ }; document.documentElement.lang = language }, [language])
+  useEffect(() => { const media = window.matchMedia('(prefers-reduced-motion: reduce)'); const update = () => setReducedMotion(media.matches); update(); return listenToMediaQuery(media, update) }, [])
   useEffect(() => {
     if (!menuOpen) return
     navigationRef.current?.querySelector('a')?.focus()
@@ -57,12 +59,12 @@ function App() {
     document.addEventListener('pointerdown', dismissOutside)
     document.addEventListener('focusin', dismissOutside)
     document.addEventListener('keydown', dismissWithEscape)
-    desktop.addEventListener('change', dismissOnDesktop)
+    const stopDesktopListener = listenToMediaQuery(desktop, dismissOnDesktop)
     return () => {
       document.removeEventListener('pointerdown', dismissOutside)
       document.removeEventListener('focusin', dismissOutside)
       document.removeEventListener('keydown', dismissWithEscape)
-      desktop.removeEventListener('change', dismissOnDesktop)
+      stopDesktopListener()
     }
   }, [menuOpen])
   const changeLanguage = (next: Language) => { setLanguage(next); setMenuOpen(false) }

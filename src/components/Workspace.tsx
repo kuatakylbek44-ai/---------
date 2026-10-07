@@ -183,7 +183,7 @@ function Computer({ rgb, animated }: { rgb: Texture; animated: boolean }) {
 }
 
 function Chair() {
-  return <group name="unbranded-chair" position={[-1.65, 0, 1.16]} rotation={[0, .2, 0]}>
+  return <group name="unbranded-chair" position={[-1.65, 0, 1.16]} rotation={[0, Math.PI - .2, 0]}>
     <Part at={[0, .83, 0]} size={[.99, .15, .91]} color="#454945" radius={.07} />
     <Part at={[0, 1.25, -.44]} size={[.95, .83, .12]} color="#454945" radius={.06} rotation={[-.08, 0, 0]} />
     {[-.41, .41].map(x => <group key={x}>

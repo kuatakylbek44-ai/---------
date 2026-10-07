@@ -1,20 +1,26 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Component, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
-import { Group, PCFShadowMap, PerspectiveCamera } from 'three'
+import { ACESFilmicToneMapping, Group, PCFSoftShadowMap, PerspectiveCamera, SRGBColorSpace } from 'three'
 import { Workspace } from './Workspace'
+import { listenToMediaQuery } from '../utils/mediaQuery'
 
 type Props = { reducedMotion: boolean; label: string; language?: 'kk' | 'ru' | 'en' }
 const sceneCopy = {
-  kk: { drag: 'Солға/оңға сүйреңіз', keys: 'Айналдыру: ← → пернелері', fallback: 'Жұмыс орныңыздың дайын көрінісі', pause: 'Тоқтату', play: 'Анимация', reset: 'Бастапқы көрініс' },
-  ru: { drag: 'Потяните влево / вправо', keys: 'Поворот: клавиши ← →', fallback: 'Готовый вид рабочего места', pause: 'Пауза', play: 'Анимация', reset: 'Начальный вид' },
-  en: { drag: 'Drag left / right', keys: 'Rotate with the ← → keys', fallback: 'Workspace preview', pause: 'Pause', play: 'Animate', reset: 'Reset view' },
+  kk: { drag: 'Солға/оңға сүйреңіз', keys: 'Айналдыру: ← → пернелері', fallback: 'Жұмыс орнымның дайын көрінісі', pause: 'Тоқтату', play: 'Анимация', reset: 'Бастапқы көрініс', portrait: 'Жақыннан', workspace: 'Толық көрініс' },
+  ru: { drag: 'Потяните влево / вправо', keys: 'Поворот: клавиши ← →', fallback: 'Готовый вид рабочего места', pause: 'Пауза', play: 'Анимация', reset: 'Начальный вид', portrait: 'Крупный план', workspace: 'Общий вид' },
+  en: { drag: 'Drag left / right', keys: 'Rotate with the ← → keys', fallback: 'Workspace preview', pause: 'Pause', play: 'Animate', reset: 'Reset view', portrait: 'Close-up', workspace: 'Full view' },
 }
 
-function HorizontalRotation({ reducedMotion, children }: { reducedMotion: boolean; children: ReactNode }) {
+function HorizontalRotation({ reducedMotion, portrait, children }: { reducedMotion: boolean; portrait: boolean; children: ReactNode }) {
   const rig = useRef<Group>(null)
   const angle = useRef(0)
   const { gl, invalidate } = useThree()
+  useLayoutEffect(() => {
+    angle.current = 0
+    if (rig.current) rig.current.rotation.y = 0
+    invalidate()
+  }, [portrait, invalidate])
   useEffect(() => {
     const canvas = gl.domElement
     const shell = canvas.closest('.scene-shell') as HTMLElement
@@ -77,7 +83,10 @@ function HorizontalRotation({ reducedMotion, children }: { reducedMotion: boolea
       : rig.current.rotation.y + remaining * (1 - Math.exp(-12 * Math.min(delta, 0.1)))
     if (Math.abs(angle.current - rig.current.rotation.y) > 0.001) invalidate()
   })
-  return <group ref={rig} name="horizontal-workspace-rig">{children}</group>
+  // In close-up mode the portrait turns around its own center rather than orbiting out of frame.
+  return <group ref={rig} name="horizontal-workspace-rig" position={portrait ? [2.57, 0, -.31] : [0, 0, 0]}>
+    <group position={portrait ? [-2.57, 0, .31] : [0, 0, 0]}>{children}</group>
+  </group>
 }
 
 function SceneFallback({ label, description }: { label: string; description: string }) {
@@ -104,24 +113,30 @@ function supportsWebGL() {
   } catch { return false }
 }
 
-function WorkspaceCamera() {
+function WorkspaceCamera({ portrait }: { portrait: boolean }) {
   const { camera, size, invalidate } = useThree()
   useLayoutEffect(() => {
     if (!(camera instanceof PerspectiveCamera)) return
-    // Fit the complete photographed setup and the standing portrait.
     const aspect = size.width / size.height
-    const distance = aspect < 1 ? 11.4 / Math.max(aspect, .72) : 10.4
-    camera.position.set(distance * .29, .18 + distance * .27, distance * .918)
-    camera.lookAt(.25, .18, 0)
+    if (portrait) {
+      const distance = aspect < 1 ? 3.7 / Math.max(aspect, .75) : 3.7
+      camera.position.set(2.57 + distance * .08, .92 + distance * .08, -.31 + distance)
+      camera.lookAt(2.57, .92, -.31)
+    } else {
+      const distance = aspect < 1 ? 11.4 / Math.max(aspect, .72) : 10.4
+      camera.position.set(distance * .29, .18 + distance * .27, distance * .918)
+      camera.lookAt(.25, .18, 0)
+    }
     camera.updateProjectionMatrix()
     invalidate()
-  }, [camera, size.width, size.height, invalidate])
+  }, [camera, size.width, size.height, portrait, invalidate])
   return null
 }
 
 export function HeroScene({ reducedMotion, label, language = 'kk' }: Props) {
   const shellRef = useRef<HTMLDivElement>(null)
   const [paused, setPaused] = useState(false)
+  const [portrait, setPortrait] = useState(false)
   const [visible, setVisible] = useState(true)
   const [foreground, setForeground] = useState(!document.hidden)
   const [available, setAvailable] = useState(supportsWebGL)
@@ -131,22 +146,22 @@ export function HeroScene({ reducedMotion, label, language = 'kk' }: Props) {
   useEffect(() => {
     const query = window.matchMedia('(max-width: 600px)')
     const update = () => setMobile(query.matches)
-    query.addEventListener('change', update)
-    return () => { query.removeEventListener('change', update); contextCleanup.current?.() }
+    const stopListener = listenToMediaQuery(query, update)
+    return () => { stopListener(); contextCleanup.current?.() }
   }, [])
   useEffect(() => {
     const shell = shellRef.current
-    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { rootMargin: '80px' })
-    if (shell) observer.observe(shell)
+    const observer = typeof IntersectionObserver === 'undefined' ? null : new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { rootMargin: '80px' })
+    if (shell) observer?.observe(shell)
     const visibility = () => setForeground(!document.hidden)
     document.addEventListener('visibilitychange', visibility)
-    return () => { observer.disconnect(); document.removeEventListener('visibilitychange', visibility) }
+    return () => { observer?.disconnect(); document.removeEventListener('visibilitychange', visibility) }
   }, [])
   const animated = !reducedMotion && !paused && visible && foreground
   const fallback = <SceneFallback label={label} description={copy.fallback} />
   return <div ref={shellRef} className="scene-shell" role="group" aria-label={`${label}. ${copy.drag}. ${copy.keys}`} tabIndex={available ? 0 : undefined} aria-keyshortcuts="ArrowLeft ArrowRight">
     {!available ? fallback : <SceneBoundary fallback={fallback}>
-      <Canvas style={{ touchAction: 'pan-y' }} frameloop="demand" shadows={{ type: PCFShadowMap }} dpr={mobile ? 1 : [1, 1.5]} camera={{ position: [3.82, 3.03, 7.8], fov: 37, near: 0.1, far: 50 }} gl={{ alpha: true, antialias: true, powerPreference: 'low-power' }} fallback={fallback}
+      <Canvas style={{ touchAction: 'pan-y' }} frameloop="demand" shadows={{ type: PCFSoftShadowMap }} dpr={mobile ? 1 : [1, 1.5]} camera={{ position: [3.82, 3.03, 7.8], fov: 37, near: 0.1, far: 50 }} gl={{ alpha: true, antialias: true, powerPreference: 'low-power', toneMapping: ACESFilmicToneMapping, toneMappingExposure: 1.12, outputColorSpace: SRGBColorSpace }} fallback={fallback}
         onCreated={({ camera, gl }) => {
           camera.lookAt(.25, .18, 0)
           gl.setClearColor('#080b16', 0)
@@ -154,18 +169,19 @@ export function HeroScene({ reducedMotion, label, language = 'kk' }: Props) {
           gl.domElement.addEventListener('webglcontextlost', lost)
           contextCleanup.current = () => gl.domElement.removeEventListener('webglcontextlost', lost)
         }}>
-        <WorkspaceCamera />
-        <hemisphereLight args={['#e6e8ee', '#25212a', .95]} />
-        <directionalLight position={[-4, 6, 7]} intensity={1.85} color="#fff5e9" castShadow shadow-mapSize={[mobile ? 512 : 1024, mobile ? 512 : 1024]} shadow-radius={3} shadow-normalBias={0.025} shadow-camera-left={-5} shadow-camera-right={5} shadow-camera-top={5} shadow-camera-bottom={-5} />
-        <directionalLight position={[4, 3, -4]} intensity={1.45} color="#9f94e5" />
-        <directionalLight position={[-3, 2, -1]} intensity={.9} color="#badce8" />
-        <pointLight position={[1, 2, 4]} intensity={1.2} distance={8} color="#b8dafa" />
-        <HorizontalRotation reducedMotion={reducedMotion}><Workspace reducedMotion={reducedMotion} animated={animated} /></HorizontalRotation>
+        <WorkspaceCamera portrait={portrait} />
+        <hemisphereLight args={['#f1f3f6', '#4a413a', 1.05]} />
+        <directionalLight position={[-3.5, 6.5, 5]} intensity={2.3} color="#fff2e5" castShadow shadow-mapSize={[mobile ? 512 : 1024, mobile ? 512 : 1024]} shadow-radius={4} shadow-normalBias={0.018} shadow-bias={-0.00015} shadow-camera-left={-5} shadow-camera-right={5} shadow-camera-top={5} shadow-camera-bottom={-5} />
+        <directionalLight position={[4, 4, -3]} intensity={1.2} color="#c8d8f2" />
+        <directionalLight position={[4, 2, 5]} intensity={.65} color="#f4eee7" />
+        <pointLight position={[-2, 3, -2]} intensity={.45} distance={7} color="#c3d8f0" />
+        <HorizontalRotation reducedMotion={reducedMotion} portrait={portrait}><Workspace reducedMotion={reducedMotion} animated={animated} /></HorizontalRotation>
       </Canvas>
     </SceneBoundary>}
     {available && <div className="scene-controls">
+      <button type="button" aria-pressed={portrait} onClick={() => setPortrait(value => !value)}>{portrait ? copy.workspace : copy.portrait}</button>
       {!reducedMotion && <button type="button" className="scene-motion-toggle" aria-pressed={paused} onClick={() => setPaused(value => !value)}><span aria-hidden="true">{paused ? '▷' : 'Ⅱ'}</span>{paused ? copy.play : copy.pause}</button>}
-      <button type="button" aria-label={copy.reset} title={copy.reset} onClick={() => shellRef.current?.dispatchEvent(new Event('scene-reset'))}>↺</button>
+      <button type="button" aria-label={copy.reset} title={copy.reset} onClick={() => { setPortrait(false); shellRef.current?.dispatchEvent(new Event('scene-reset')) }}>↺</button>
     </div>}
     {available && <div className="scene-interaction-hint" aria-hidden="true"><span>↔</span> {copy.drag}</div>}
     <div className="scene-tag"><span /> {label}</div>
